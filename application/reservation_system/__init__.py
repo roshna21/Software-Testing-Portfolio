@@ -6,7 +6,7 @@ from flask import Flask
 
 from .service import ReservationService
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 
 def create_app(config: dict = None) -> Flask:
