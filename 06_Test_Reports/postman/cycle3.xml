@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Restaurant Table Reservation System - API Tests" tests="15" time="0.068">
+  <testsuite name="PM-00 Setup: reset test data" id="69aee845-4a11-47eb-8229-46d615808f18" timestamp="2026-11-12T07:45:54.636Z" tests="1" failures="0" errors="0" time="0.016">
+    <testcase name="Reset OK" time="0.016" classname="Pm00SetupResetTestData"/>
+  </testsuite>
+  <testsuite name="PM-01 Health check" id="e17264bb-3f99-40de-b8d2-3d1b86a5e4df" timestamp="2026-11-12T07:45:54.636Z" tests="3" failures="0" errors="0" time="0.004">
+    <testcase name="Status 200" time="0.004" classname="Pm01HealthCheck"/>
+    <testcase name="Body says ok" time="0.004" classname="Pm01HealthCheck"/>
+    <testcase name="Responds under 500 ms" time="0.004" classname="Pm01HealthCheck"/>
+  </testsuite>
+  <testsuite name="PM-02 List tables" id="88f966c0-e34a-423e-a838-f0805a2dd68f" timestamp="2026-11-12T07:45:54.636Z" tests="3" failures="0" errors="0" time="0.003">
+    <testcase name="Status 200" time="0.003" classname="Pm02ListTables"/>
+    <testcase name="8 tables" time="0.003" classname="Pm02ListTables"/>
+    <testcase name="36 seats in total" time="0.003" classname="Pm02ListTables"/>
+  </testsuite>
+  <testsuite name="PM-03 Create reservation (valid)" id="08929cb7-b644-40ca-b087-59d24ad49cf4" timestamp="2026-11-12T07:45:54.636Z" tests="4" failures="0" errors="0" time="0.009">
+    <testcase name="Status 201 Created" time="0.009" classname="Pm03CreateReservationValid"/>
+    <testcase name="Status CONFIRMED" time="0.009" classname="Pm03CreateReservationValid"/>
+    <testcase name="Smallest table T1 assigned" time="0.009" classname="Pm03CreateReservationValid"/>
+    <testcase name="Schema has required fields" time="0.009" classname="Pm03CreateReservationValid"/>
+  </testsuite>
+  <testsuite name="PM-04 Get reservation by ID" id="292c6f17-b74e-4b3c-9d9d-1620c5d59a56" timestamp="2026-11-12T07:45:54.636Z" tests="2" failures="0" errors="0" time="0.003">
+    <testcase name="Status 200" time="0.003" classname="Pm04GetReservationById"/>
+    <testcase name="Same ID returned" time="0.003" classname="Pm04GetReservationById"/>
+  </testsuite>
+  <testsuite name="PM-05 Invalid phone rejected" id="d366a093-0faf-4815-bba9-0d429b88b371" timestamp="2026-11-12T07:45:54.636Z" tests="2" failures="0" errors="0" time="0.003">
+    <testcase name="Status 400" time="0.003" classname="Pm05InvalidPhoneRejected"/>
+    <testcase name="Field is phone" time="0.003" classname="Pm05InvalidPhoneRejected"/>
+  </testsuite>
+  <testsuite name="PM-06 Party of 8 accepted (upper boundary)" id="cc5463f6-2af3-49a0-a2d1-5c6c40152ade" timestamp="2026-11-12T07:45:54.636Z" tests="2" failures="0" errors="0" time="0.004">
+    <testcase name="Status 201 Created" time="0.004" classname="Pm06PartyOf8AcceptedUpperBoundary"/>
+    <testcase name="Table T8 assigned" time="0.004" classname="Pm06PartyOf8AcceptedUpperBoundary"/>
+  </testsuite>
+  <testsuite name="PM-07 Party of 7 at 19:00 (takes T8)" id="ffe9bc0f-cb94-466f-9871-e71ceb5f31c8" timestamp="2026-11-12T07:45:54.636Z" tests="1" failures="0" errors="0" time="0.004">
+    <testcase name="Status 201 Created" time="0.004" classname="Pm07PartyOf7At1900TakesT8"/>
+  </testsuite>
+  <testsuite name="PM-08 Overlapping booking at 18:30 refused" id="8bf8e81c-fcec-4bd5-b884-251fbe465e25" timestamp="2026-11-12T07:45:54.636Z" tests="2" failures="0" errors="0" time="0.006">
+    <testcase name="Status 409 Conflict (no double booking)" time="0.006" classname="Pm08OverlappingBookingAt1830Refused"/>
+    <testcase name="Code no_table" time="0.006" classname="Pm08OverlappingBookingAt1830Refused"/>
+  </testsuite>
+  <testsuite name="PM-09 Duplicate phone same day refused" id="201cdfde-287f-406c-a3d5-46198af4ccfe" timestamp="2026-11-12T07:45:54.636Z" tests="2" failures="0" errors="0" time="0.003">
+    <testcase name="Status 409" time="0.003" classname="Pm09DuplicatePhoneSameDayRefused"/>
+    <testcase name="Code duplicate" time="0.003" classname="Pm09DuplicatePhoneSameDayRefused"/>
+  </testsuite>
+  <testsuite name="PM-10 Seat the guest" id="9f4edc75-a0d3-42fb-b711-36539003582a" timestamp="2026-11-12T07:45:54.636Z" tests="2" failures="0" errors="0" time="0.003">
+    <testcase name="Status 200" time="0.003" classname="Pm10SeatTheGuest"/>
+    <testcase name="Now SEATED" time="0.003" classname="Pm10SeatTheGuest"/>
+  </testsuite>
+  <testsuite name="PM-11 Complete the visit" id="cbcc7d4c-5447-4bec-8da5-e152f230efd0" timestamp="2026-11-12T07:45:54.636Z" tests="2" failures="0" errors="0" time="0.002">
+    <testcase name="Status 200" time="0.002" classname="Pm11CompleteTheVisit"/>
+    <testcase name="Now COMPLETED" time="0.002" classname="Pm11CompleteTheVisit"/>
+  </testsuite>
+  <testsuite name="PM-12 Cancelling a completed visit is refused" id="aef44a9b-0411-4583-bb14-e298195fb144" timestamp="2026-11-12T07:45:54.636Z" tests="2" failures="0" errors="0" time="0.003">
+    <testcase name="Status 409" time="0.003" classname="Pm12CancellingACompletedVisitIsRefused"/>
+    <testcase name="Code invalid_transition" time="0.003" classname="Pm12CancellingACompletedVisitIsRefused"/>
+  </testsuite>
+  <testsuite name="PM-13 Unknown reservation gives 404" id="81004f26-11d0-4054-b096-a7784cabffbf" timestamp="2026-11-12T07:45:54.636Z" tests="1" failures="0" errors="0" time="0.002">
+    <testcase name="Status 404" time="0.002" classname="Pm13UnknownReservationGives404"/>
+  </testsuite>
+  <testsuite name="PM-14 Availability shows T8 busy" id="da041ca8-740c-4f95-939f-cec7aa642eda" timestamp="2026-11-12T07:45:54.636Z" tests="2" failures="0" errors="0" time="0.003">
+    <testcase name="Status 200" time="0.003" classname="Pm14AvailabilityShowsT8Busy"/>
+    <testcase name="T8 not available" time="0.003" classname="Pm14AvailabilityShowsT8Busy"/>
+  </testsuite>
+</testsuites>

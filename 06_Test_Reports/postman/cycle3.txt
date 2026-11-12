@@ -1,0 +1,99 @@
+newman
+
+Restaurant Table Reservation System - API Tests
+
+→ PM-00 Setup: reset test data
+  POST http://127.0.0.1:5000/api/_reset [200 OK, 185B, 16ms]
+  ✓  Reset OK
+
+→ PM-01 Health check
+  GET http://127.0.0.1:5000/api/health [200 OK, 200B, 4ms]
+  ✓  Status 200
+  ✓  Body says ok
+  ✓  Responds under 500 ms
+
+→ PM-02 List tables
+  GET http://127.0.0.1:5000/api/tables [200 OK, 417B, 3ms]
+  ✓  Status 200
+  ✓  8 tables
+  ✓  36 seats in total
+
+→ PM-03 Create reservation (valid)
+  POST http://127.0.0.1:5000/api/reservations [201 CREATED, 470B, 9ms]
+  ✓  Status 201 Created
+  ✓  Status CONFIRMED
+  ✓  Smallest table T1 assigned
+  ✓  Schema has required fields
+
+→ PM-04 Get reservation by ID
+  GET http://127.0.0.1:5000/api/reservations/R1001 [200 OK, 465B, 3ms]
+  ✓  Status 200
+  ✓  Same ID returned
+
+→ PM-05 Invalid phone rejected
+  POST http://127.0.0.1:5000/api/reservations [400 BAD REQUEST, 260B, 3ms]
+  ✓  Status 400
+  ✓  Field is phone
+
+→ PM-06 Party of 8 accepted (upper boundary)
+  POST http://127.0.0.1:5000/api/reservations [201 CREATED, 472B, 4ms]
+  ✓  Status 201 Created
+  ✓  Table T8 assigned
+
+→ PM-07 Party of 7 at 19:00 (takes T8)
+  POST http://127.0.0.1:5000/api/reservations [201 CREATED, 472B, 4ms]
+  ✓  Status 201 Created
+
+→ PM-08 Overlapping booking at 18:30 refused
+  POST http://127.0.0.1:5000/api/reservations [409 CONFLICT, 250B, 6ms]
+  ✓  Status 409 Conflict (no double booking)
+  ✓  Code no_table
+
+→ PM-09 Duplicate phone same day refused
+  POST http://127.0.0.1:5000/api/reservations [409 CONFLICT, 263B, 3ms]
+  ✓  Status 409
+  ✓  Code duplicate
+
+→ PM-10 Seat the guest
+  PATCH http://127.0.0.1:5000/api/reservations/R1001/status [200 OK, 462B, 3ms]
+  ✓  Status 200
+  ✓  Now SEATED
+
+→ PM-11 Complete the visit
+  PATCH http://127.0.0.1:5000/api/reservations/R1001/status [200 OK, 465B, 2ms]
+  ✓  Status 200
+  ✓  Now COMPLETED
+
+→ PM-12 Cancelling a completed visit is refused
+  DELETE http://127.0.0.1:5000/api/reservations/R1001 [409 CONFLICT, 261B, 3ms]
+  ✓  Status 409
+  ✓  Code invalid_transition
+
+→ PM-13 Unknown reservation gives 404
+  GET http://127.0.0.1:5000/api/reservations/R9999 [404 NOT FOUND, 232B, 2ms]
+  ✓  Status 404
+
+→ PM-14 Availability shows T8 busy
+  GET http://127.0.0.1:5000/api/availability?date=2026-11-20&time=19:30 [200 OK, 554B, 3ms]
+  ✓  Status 200
+  ✓  T8 not available
+
+┌─────────────────────────┬─────────────────┬─────────────────┐
+│                         │        executed │          failed │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              iterations │               1 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│                requests │              15 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│            test-scripts │              15 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│      prerequest-scripts │               0 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              assertions │              31 │               0 │
+├─────────────────────────┴─────────────────┴─────────────────┤
+│ total run duration: 290ms                                   │
+├─────────────────────────────────────────────────────────────┤
+│ total data received: 2.88kB (approx)                        │
+├─────────────────────────────────────────────────────────────┤
+│ average response time: 4ms [min: 2ms, max: 16ms, s.d.: 3ms] │
+└─────────────────────────────────────────────────────────────┘
