@@ -54,7 +54,7 @@ def validate_party_size(party_size) -> int:
         size = int(str(party_size).strip())
     except (TypeError, ValueError):
         raise ValidationError("party_size", "Party size must be a whole number")
-    if not MIN_PARTY <= size < MAX_PARTY:
+    if not MIN_PARTY <= size <= MAX_PARTY:
         raise ValidationError("party_size", f"Party size must be between {MIN_PARTY} and {MAX_PARTY}")
     return size
 
