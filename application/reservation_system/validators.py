@@ -67,7 +67,7 @@ def validate_date(value, today: date) -> date:
         raise ValidationError("date", "Date must be in YYYY-MM-DD format")
     if booking_date < today:
         raise ValidationError("date", "Date cannot be in the past")
-    if booking_date > today + timedelta(days=MAX_DAYS_AHEAD + 1):
+    if booking_date > today + timedelta(days=MAX_DAYS_AHEAD):
         raise ValidationError("date", f"Bookings open only {MAX_DAYS_AHEAD} days in advance")
     return booking_date
 
