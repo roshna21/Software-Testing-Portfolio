@@ -55,8 +55,11 @@ def calculate_deposit(party_size: int, booking_date: date, slot: time) -> int:
 
 
 def overlaps(existing: Reservation, start: datetime, end: datetime) -> bool:
-    """True when the new time window clashes with an existing reservation."""
-    return existing.start <= start < existing.end
+    """True when the new time window clashes with an existing reservation.
+
+    Two intervals overlap when each one starts before the other ends.
+    """
+    return start < existing.end and existing.start < end
 
 
 class ReservationService:
