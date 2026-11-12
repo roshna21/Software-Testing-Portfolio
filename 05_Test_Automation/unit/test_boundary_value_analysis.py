@@ -13,12 +13,12 @@ ACCEPT, REJECT = "Accepted", "Rejected"
 
 BVA_CASES = [
     # --- R4 party size: 1 .. 8 ---
-    ("TC-BVA-01", "party_size", 0, REJECT),
+    ("TC-BVA-01", "party_size", 0, REJECT + ": Party size"),
     ("TC-BVA-02", "party_size", 1, ACCEPT),
     ("TC-BVA-03", "party_size", 2, ACCEPT),
     ("TC-BVA-04", "party_size", 7, ACCEPT),
     ("TC-BVA-05", "party_size", 8, ACCEPT),
-    ("TC-BVA-06", "party_size", 9, REJECT),
+    ("TC-BVA-06", "party_size", 9, REJECT + ": Party size"),   # must fail validation, not "no table"
     # --- R1 name length: 2 .. 50 ---
     ("TC-BVA-07", "customer_name", "A", REJECT),
     ("TC-BVA-08", "customer_name", "Al", ACCEPT),
@@ -48,6 +48,9 @@ BVA_CASES = [
 ]
 
 
+# For party size the reason matters: 9 guests must fail *validation*. Without the
+# reason, a wrong limit of 9 would still look "rejected" because no table seats 9
+# (this gap was found by mutation testing).
 @pytest.mark.parametrize("tc_id, field, value, expected", BVA_CASES, ids=[c[0] for c in BVA_CASES])
 def test_input_boundaries(service, record, tc_id, field, value, expected):
     actual = attempt(service, booking(**{field: value}))
@@ -94,3 +97,11 @@ def test_refund_boundaries(service, clock, record, tc_id, cancel_at, expected_re
     cancelled = service.cancel(r.reservation_id)
     record(f"Refund Rs.{expected_refund}", f"Refund Rs.{cancelled.refund}")
     assert cancelled.refund == expected_refund
+
+
+def test_TC_BVA_38_slot_equal_to_current_time_rejected(service, clock, record):
+    """R6 boundary: a slot that starts exactly 'now' has already passed (added after mutation testing)."""
+    clock.now = datetime(2026, 11, 16, 13, 0)
+    actual = attempt(service, booking(date="2026-11-16", time="13:00"))
+    record("Rejected: This time has already passed", actual)
+    assert actual == "Rejected: This time has already passed"

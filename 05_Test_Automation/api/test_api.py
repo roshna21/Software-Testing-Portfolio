@@ -84,9 +84,12 @@ def test_TC_API_11_delete_cancels(client, record):
 def test_TC_API_12_availability_marks_booked_table(client, record):
     _create(client, time="19:00")                 # party of 2 -> T1
     res = client.get("/api/availability?date=2026-11-18&time=19:30")
-    t1 = next(t for t in res.json if t["table_id"] == "T1")
-    record("200, T1 unavailable", f"{res.status_code}, T1 available={t1['available']}")
-    assert res.status_code == 200 and t1["available"] is False
+    free = {t["table_id"]: t["available"] for t in res.json}
+    others_free = all(v for k, v in free.items() if k != "T1")
+    record("200, T1 unavailable, other 7 tables available",
+           f"{res.status_code}, T1 available={free['T1']}, others all available={others_free}")
+    # Checking the *other* tables too was added after mutation testing.
+    assert res.status_code == 200 and free["T1"] is False and others_free
 
 
 def test_TC_API_13_duplicate_returns_409(client, record):

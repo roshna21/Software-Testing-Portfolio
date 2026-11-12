@@ -31,7 +31,7 @@ All bookings on Wed 18 Nov 2026, 19:00. Tables: T1(2) T2(2) T3(4) T4(4) T5(4) T6
 | TC-API-09 | `PATCH …/status` → SEATED | 200, SEATED |
 | TC-API-10 | `PATCH …/status` CONFIRMED → COMPLETED | 409, `invalid_transition` |
 | TC-API-11 | `DELETE /api/reservations/{id}` | 200, CANCELLED |
-| TC-API-12 | `GET /api/availability` after booking T1 at 19:00, check 19:30 | T1 `available: false` |
+| TC-API-12 | `GET /api/availability` after booking T1 at 19:00, check 19:30 | T1 `available: false`; the other 7 tables `available: true` |
 | TC-API-13 | Same phone, same day, second booking | 409, `duplicate` |
 
 The same API is also tested from **Postman** (15 requests, 31 assertions): `05_Test_Automation/postman/`.

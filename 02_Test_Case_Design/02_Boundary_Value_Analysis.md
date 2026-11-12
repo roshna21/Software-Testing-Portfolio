@@ -21,6 +21,7 @@ For a range **min…max** we test: **min-1, min, min+1, max-1, max, max+1** (the
 | R2 Phone length | exactly 10 | 9, 10, 11 |
 | R5 Booking date | today … today+30 | today-1, today, today+1, today+29, today+30, today+31 |
 | R6 Time slot | 11:00 … 21:30 | 10:30, 11:00, 11:30, 21:00, 21:30, 22:00 |
+| R6 Not already passed | slot > now | slot = now |
 | R7 90-minute table hold | existing booking 19:00–20:30 | new start 17:30, 18:00, 18:30, 19:00, 20:00, 20:30 |
 | R10 Free-cancellation window | ≥ 2 hours notice | 2h 01m, 2h 00m, 1h 59m |
 
@@ -30,12 +31,12 @@ Fixed clock: **Mon 16 Nov 2026, 10:00** → today+30 = 16 Dec 2026.
 
 | TC ID | Rule | Input | Expected |
 |---|---|---|---|
-| TC-BVA-01 | R4 | party = 0 | Rejected |
+| TC-BVA-01 | R4 | party = 0 | Rejected – *party size* error |
 | TC-BVA-02 | R4 | party = 1 | Accepted |
 | TC-BVA-03 | R4 | party = 2 | Accepted |
 | TC-BVA-04 | R4 | party = 7 | Accepted |
 | TC-BVA-05 | R4 | party = 8 | Accepted |
-| TC-BVA-06 | R4 | party = 9 | Rejected |
+| TC-BVA-06 | R4 | party = 9 | Rejected – *party size* error (not "no table") |
 | TC-BVA-07 | R1 | name = `A` (1) | Rejected |
 | TC-BVA-08 | R1 | name = `Al` (2) | Accepted |
 | TC-BVA-09 | R1 | name = `Ali` (3) | Accepted |
@@ -81,5 +82,11 @@ Setup: party of 6 (deposit ₹600) booked for today 14:00, then cancelled at the
 | TC-BVA-35 | 11:59 | 2 h 01 m | ₹600 |
 | TC-BVA-36 | 12:00 | 2 h 00 m | ₹600 |
 | TC-BVA-37 | 12:01 | 1 h 59 m | ₹0 |
+
+### Added after mutation testing
+
+| TC ID | Rule | Input | Expected |
+|---|---|---|---|
+| TC-BVA-38 | R6 | Clock 13:00, book today 13:00 (slot = now) | Rejected – *This time has already passed* |
 
 **Automation:** `05_Test_Automation/unit/test_boundary_value_analysis.py`
