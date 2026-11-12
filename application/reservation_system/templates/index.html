@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Book a table{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Reserve your table</h1>
+  <p>Open daily 11:00 – 23:00. Book up to 30 days ahead for parties of 1 to 8 guests.</p>
+</section>
+
+<div class="layout">
+  <form id="booking-form" class="card" method="post" action="{{ url_for('web.book') }}" novalidate>
+    {% if error %}<div id="form-error" class="alert alert-error" role="alert">{{ error }}</div>{% endif %}
+
+    <label for="customer_name">Full name</label>
+    <input id="customer_name" name="customer_name" type="text" value="{{ form.get('customer_name', '') }}" placeholder="e.g. Priya Sharma">
+
+    <div class="row">
+      <div>
+        <label for="phone">Mobile number</label>
+        <input id="phone" name="phone" type="text" value="{{ form.get('phone', '') }}" placeholder="10 digits">
+      </div>
+      <div>
+        <label for="email">Email <span class="muted">(optional)</span></label>
+        <input id="email" name="email" type="text" value="{{ form.get('email', '') }}">
+      </div>
+    </div>
+
+    <div class="row three">
+      <div>
+        <label for="date">Date</label>
+        <input id="date" name="date" type="text" value="{{ form.get('date', '') }}" placeholder="YYYY-MM-DD">
+      </div>
+      <div>
+        <label for="time">Time</label>
+        <select id="time" name="time">
+          {% for slot in slots %}
+            <option value="{{ slot }}" {% if form.get('time') == slot %}selected{% endif %}>{{ slot }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div>
+        <label for="party_size">Guests</label>
+        <input id="party_size" name="party_size" type="text" value="{{ form.get('party_size', '') }}">
+      </div>
+    </div>
+
+    <button id="submit-booking" type="submit" class="btn btn-primary">Reserve table</button>
+  </form>
+
+  <aside class="card info">
+    <h2>Good to know</h2>
+    <ul>
+      <li>Each booking holds the table for <strong>90 minutes</strong>.</li>
+      <li>Parties of <strong>6 or more</strong>: deposit of ₹100 per guest.</li>
+      <li>Saturday &amp; Sunday, <strong>19:00–21:30</strong>: ₹300 deposit.</li>
+      <li>Cancel at least <strong>2 hours</strong> ahead for a full deposit refund.</li>
+    </ul>
+  </aside>
+</div>
+{% endblock %}

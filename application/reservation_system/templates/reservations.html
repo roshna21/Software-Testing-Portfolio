@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Staff view{% endblock %}
+{% block content %}
+<div class="staff-head">
+  <h1>Reservations</h1>
+  <form method="get" class="inline">
+    <input id="filter-date" name="date" type="text" value="{{ day }}">
+    <button id="filter-button" class="btn" type="submit">Show</button>
+  </form>
+</div>
+
+{% if items %}
+<table id="reservations-table" class="grid">
+  <thead><tr><th>ID</th><th>Time</th><th>Name</th><th>Guests</th><th>Table</th><th>Deposit</th><th>Status</th><th>Actions</th></tr></thead>
+  <tbody>
+  {% for r in items %}
+    <tr id="row-{{ r.reservation_id }}">
+      <td><a href="{{ url_for('web.reservation', reservation_id=r.reservation_id) }}">{{ r.reservation_id }}</a></td>
+      <td>{{ r.start.strftime('%H:%M') }}</td>
+      <td>{{ r.customer_name }}</td>
+      <td>{{ r.party_size }}</td>
+      <td>{{ r.table_id }}</td>
+      <td>₹{{ r.deposit }}</td>
+      <td><span class="badge badge-{{ r.status.value|lower }}" data-status>{{ r.status.value }}</span></td>
+      <td class="actions">
+        {% set next_url = url_for('web.reservations', date=day) %}
+        {% if r.status.value == 'CONFIRMED' %}
+          {% for status, label in [('SEATED','Seat'), ('NO_SHOW','No-show')] %}
+          <form method="post" action="{{ url_for('web.change_status', reservation_id=r.reservation_id) }}">
+            <input type="hidden" name="status" value="{{ status }}"><input type="hidden" name="next" value="{{ next_url }}">
+            <button class="btn btn-small" data-action="{{ status }}">{{ label }}</button>
+          </form>
+          {% endfor %}
+          <form method="post" action="{{ url_for('web.cancel', reservation_id=r.reservation_id) }}">
+            <input type="hidden" name="next" value="{{ next_url }}">
+            <button class="btn btn-small btn-danger" data-action="CANCELLED">Cancel</button>
+          </form>
+        {% elif r.status.value == 'SEATED' %}
+          <form method="post" action="{{ url_for('web.change_status', reservation_id=r.reservation_id) }}">
+            <input type="hidden" name="status" value="COMPLETED"><input type="hidden" name="next" value="{{ next_url }}">
+            <button class="btn btn-small" data-action="COMPLETED">Complete</button>
+          </form>
+        {% else %}<span class="muted">—</span>{% endif %}
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p id="empty-message" class="card">No reservations for {{ day }}.</p>
+{% endif %}
+
+<h2>Floor plan</h2>
+<div class="floor">
+  {% for t in tables %}<div class="table-chip"><strong>{{ t.table_id }}</strong><span>{{ t.capacity }} seats</span></div>{% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Reservation {{ r.reservation_id }}{% endblock %}
+{% block content %}
+{% if new %}<div id="success-banner" class="alert alert-success" role="alert">Your table is booked! Reservation number <strong>{{ r.reservation_id }}</strong>.</div>{% endif %}
+
+<div class="card ticket">
+  <div class="ticket-head">
+    <h1 id="reservation-id">{{ r.reservation_id }}</h1>
+    <span id="reservation-status" class="badge badge-{{ r.status.value|lower }}">{{ r.status.value }}</span>
+  </div>
+  <dl class="details">
+    <dt>Name</dt><dd id="detail-name">{{ r.customer_name }}</dd>
+    <dt>Phone</dt><dd id="detail-phone">{{ r.phone }}</dd>
+    <dt>Date</dt><dd id="detail-date">{{ r.start.strftime('%A, %d %b %Y') }}</dd>
+    <dt>Time</dt><dd id="detail-time">{{ r.start.strftime('%H:%M') }} – {{ r.end.strftime('%H:%M') }}</dd>
+    <dt>Guests</dt><dd id="detail-party">{{ r.party_size }}</dd>
+    <dt>Table</dt><dd id="detail-table">{{ r.table_id }}</dd>
+    <dt>Deposit</dt><dd id="detail-deposit">₹{{ r.deposit }}</dd>
+    {% if r.status.value == 'CANCELLED' %}<dt>Refund</dt><dd id="detail-refund">₹{{ r.refund }}</dd>{% endif %}
+  </dl>
+  {% if r.status.value == 'CONFIRMED' %}
+  <form method="post" action="{{ url_for('web.cancel', reservation_id=r.reservation_id) }}">
+    <button id="cancel-button" type="submit" class="btn btn-danger">Cancel reservation</button>
+  </form>
+  {% endif %}
+</div>
+<p><a id="book-another" href="{{ url_for('web.index') }}">← Book another table</a></p>
+{% endblock %}
