@@ -20,6 +20,8 @@ TEST_CYCLE="$CYCLE" python3 -m pytest \
   --cov-report=html:"$OUT/coverage" --cov-report=term \
   -p no:cacheprovider -o log_cli=false 2>&1 | grep -v "werkzeug" | tee "$OUT/pytest_console.txt"
 
+rm -f "$OUT/coverage/.gitignore"   # coverage.py hides its HTML report from git by default
+
 echo "== $TITLE: Postman collection via Newman =="
 bash "$HERE/postman/run_postman.sh" "$CYCLE" > /dev/null
 tail -25 "$ROOT/06_Test_Reports/postman/$CYCLE.txt"

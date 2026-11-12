@@ -1,0 +1,302 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.18, pytest-9.1.1, pluggy-1.6.0
+rootdir: /home/roshna/Software-Testing-Portfolio/05_Test_Automation
+configfile: pytest.ini
+testpaths: unit, api, ui
+plugins: platformdirs-4.13.5, anyio-4.15.1, metadata-3.1.1, cov-7.1.0, html-4.2.0
+collected 127 items
+
+unit/test_boundary_value_analysis.py ....F.......F..F.....F.......FF.... [ 27%]
+..                                                                       [ 29%]
+unit/test_decision_tables.py ........F......F.                           [ 42%]
+unit/test_equivalence_partitioning.py ....F....F...................      [ 65%]
+unit/test_state_transition.py .....F.F........                           [ 77%]
+unit/test_table_allocation.py .......                                    [ 83%]
+api/test_api.py .............                                            [ 93%]
+ui/test_ui_selenium.py ...F....                                          [100%]
+
+=================================== FAILURES ===================================
+_______________________ test_input_boundaries[TC-BVA-05] _______________________
+
+service = <reservation_system.service.ReservationService object at 0x7f2e7901f100>
+record = <function record.<locals>._record at 0x7f2e78f10860>
+tc_id = 'TC-BVA-05', field = 'party_size', value = 8, expected = 'Accepted'
+
+    @pytest.mark.parametrize("tc_id, field, value, expected", BVA_CASES, ids=[c[0] for c in BVA_CASES])
+    def test_input_boundaries(service, record, tc_id, field, value, expected):
+        actual = attempt(service, booking(**{field: value}))
+        record(expected, actual)
+>       assert actual.startswith(expected), f"{tc_id}: {field}={value!r} -> {actual}"
+E       AssertionError: TC-BVA-05: party_size=8 -> Rejected: Party size must be between 1 and 8
+E       assert False
+E        +  where False = <built-in method startswith of str object at 0x7f2e78eaff90>('Accepted')
+E        +    where <built-in method startswith of str object at 0x7f2e78eaff90> = 'Rejected: Party size must be between 1 and 8'.startswith
+
+unit/test_boundary_value_analysis.py:55: AssertionError
+_______________________ test_input_boundaries[TC-BVA-13] _______________________
+
+service = <reservation_system.service.ReservationService object at 0x7f2e791951d0>
+record = <function record.<locals>._record at 0x7f2e78f114e0>
+tc_id = 'TC-BVA-13', field = 'customer_name', value = ' A '
+expected = 'Rejected'
+
+    @pytest.mark.parametrize("tc_id, field, value, expected", BVA_CASES, ids=[c[0] for c in BVA_CASES])
+    def test_input_boundaries(service, record, tc_id, field, value, expected):
+        actual = attempt(service, booking(**{field: value}))
+        record(expected, actual)
+>       assert actual.startswith(expected), f"{tc_id}: {field}={value!r} -> {actual}"
+E       AssertionError: TC-BVA-13: customer_name=' A ' -> Accepted (R1001, table T1, deposit Rs.0)
+E       assert False
+E        +  where False = <built-in method startswith of str object at 0x7f2e78f1a7f0>('Rejected')
+E        +    where <built-in method startswith of str object at 0x7f2e78f1a7f0> = 'Accepted (R1001, table T1, deposit Rs.0)'.startswith
+
+unit/test_boundary_value_analysis.py:55: AssertionError
+_______________________ test_input_boundaries[TC-BVA-16] _______________________
+
+service = <reservation_system.service.ReservationService object at 0x7f2e7902b350>
+record = <function record.<locals>._record at 0x7f2e78f12020>
+tc_id = 'TC-BVA-16', field = 'phone', value = '98765432101'
+expected = 'Rejected'
+
+    @pytest.mark.parametrize("tc_id, field, value, expected", BVA_CASES, ids=[c[0] for c in BVA_CASES])
+    def test_input_boundaries(service, record, tc_id, field, value, expected):
+        actual = attempt(service, booking(**{field: value}))
+        record(expected, actual)
+>       assert actual.startswith(expected), f"{tc_id}: {field}={value!r} -> {actual}"
+E       AssertionError: TC-BVA-16: phone='98765432101' -> Accepted (R1001, table T1, deposit Rs.0)
+E       assert False
+E        +  where False = <built-in method startswith of str object at 0x7f2e78f1a910>('Rejected')
+E        +    where <built-in method startswith of str object at 0x7f2e78f1a910> = 'Accepted (R1001, table T1, deposit Rs.0)'.startswith
+
+unit/test_boundary_value_analysis.py:55: AssertionError
+_______________________ test_input_boundaries[TC-BVA-22] _______________________
+
+service = <reservation_system.service.ReservationService object at 0x7f2e78f2db50>
+record = <function record.<locals>._record at 0x7f2e78f12b60>
+tc_id = 'TC-BVA-22', field = 'date', value = '2026-12-17', expected = 'Rejected'
+
+    @pytest.mark.parametrize("tc_id, field, value, expected", BVA_CASES, ids=[c[0] for c in BVA_CASES])
+    def test_input_boundaries(service, record, tc_id, field, value, expected):
+        actual = attempt(service, booking(**{field: value}))
+        record(expected, actual)
+>       assert actual.startswith(expected), f"{tc_id}: {field}={value!r} -> {actual}"
+E       AssertionError: TC-BVA-22: date='2026-12-17' -> Accepted (R1001, table T1, deposit Rs.0)
+E       assert False
+E        +  where False = <built-in method startswith of str object at 0x7f2e78f1ad90>('Rejected')
+E        +    where <built-in method startswith of str object at 0x7f2e78f1ad90> = 'Accepted (R1001, table T1, deposit Rs.0)'.startswith
+
+unit/test_boundary_value_analysis.py:55: AssertionError
+______________________ test_overlap_boundaries[TC-BVA-30] ______________________
+
+service = <reservation_system.service.ReservationService object at 0x7f2e78f343d0>
+record = <function record.<locals>._record at 0x7f2e78f13e20>
+tc_id = 'TC-BVA-30', new_time = '18:00', expected = 'Rejected'
+
+    @pytest.mark.parametrize("tc_id, new_time, expected", OVERLAP_CASES, ids=[c[0] for c in OVERLAP_CASES])
+    def test_overlap_boundaries(service, record, tc_id, new_time, expected):
+        service.create(booking(customer_name="Existing Guest", phone="9000000001",
+                               party_size=7, time="19:00"))
+        actual = attempt(service, booking(phone="9000000002", party_size=7, time=new_time))
+        record(expected, actual)
+>       assert actual.startswith(expected), f"{tc_id}: new booking at {new_time} -> {actual}"
+E       AssertionError: TC-BVA-30: new booking at 18:00 -> Accepted (R1002, table T8, deposit Rs.700)
+E       assert False
+E        +  where False = <built-in method startswith of str object at 0x7f2e78f1b090>('Rejected')
+E        +    where <built-in method startswith of str object at 0x7f2e78f1b090> = 'Accepted (R1002, table T8, deposit Rs.700)'.startswith
+
+unit/test_boundary_value_analysis.py:78: AssertionError
+______________________ test_overlap_boundaries[TC-BVA-31] ______________________
+
+service = <reservation_system.service.ReservationService object at 0x7f2e78f34830>
+record = <function record.<locals>._record at 0x7f2e78f785e0>
+tc_id = 'TC-BVA-31', new_time = '18:30', expected = 'Rejected'
+
+    @pytest.mark.parametrize("tc_id, new_time, expected", OVERLAP_CASES, ids=[c[0] for c in OVERLAP_CASES])
+    def test_overlap_boundaries(service, record, tc_id, new_time, expected):
+        service.create(booking(customer_name="Existing Guest", phone="9000000001",
+                               party_size=7, time="19:00"))
+        actual = attempt(service, booking(phone="9000000002", party_size=7, time=new_time))
+        record(expected, actual)
+>       assert actual.startswith(expected), f"{tc_id}: new booking at {new_time} -> {actual}"
+E       AssertionError: TC-BVA-31: new booking at 18:30 -> Accepted (R1002, table T8, deposit Rs.700)
+E       assert False
+E        +  where False = <built-in method startswith of str object at 0x7f2e78f1b2d0>('Rejected')
+E        +    where <built-in method startswith of str object at 0x7f2e78f1b2d0> = 'Accepted (R1002, table T8, deposit Rs.700)'.startswith
+
+unit/test_boundary_value_analysis.py:78: AssertionError
+____________________ test_deposit_decision_table[TC-DT-09] _____________________
+
+record = <function record.<locals>._record at 0x7f2e78f7ade0>
+tc_id = 'TC-DT-09', party = 2, day = datetime.date(2026, 11, 20)
+slot = datetime.time(19, 0)
+
+    @pytest.mark.parametrize("tc_id, party, day, slot", DEPOSIT_RULES, ids=[r[0] for r in DEPOSIT_RULES])
+    def test_deposit_decision_table(record, tc_id, party, day, slot):
+        expected = EXPECTED_DEPOSIT[tc_id]
+        actual = calculate_deposit(party, day, slot)
+        record(f"Deposit Rs.{expected}", f"Deposit Rs.{actual}")
+>       assert actual == expected, f"{tc_id}: party={party}, {day:%A}, {slot} -> {actual}"
+E       AssertionError: TC-DT-09: party=2, Friday, 19:00:00 -> 300
+E       assert 300 == 0
+
+unit/test_decision_tables.py:42: AssertionError
+____________ test_cancellation_refused_when_not_confirmed[TC-DT-16] ____________
+
+service = <reservation_system.service.ReservationService object at 0x7f2e79432270>
+record = <function record.<locals>._record at 0x7f2e78f78360>
+tc_id = 'TC-DT-16', steps = ['SEATED']
+
+    @pytest.mark.parametrize("tc_id, steps", [
+        ("TC-DT-16", ["SEATED"]),        # not CONFIRMED (seated)    -> cancellation refused
+        ("TC-DT-17", ["CANCELLED"]),     # not CONFIRMED (cancelled) -> cancellation refused
+    ], ids=["TC-DT-16", "TC-DT-17"])
+    def test_cancellation_refused_when_not_confirmed(service, record, tc_id, steps):
+        r = service.create(booking(**SLOT))
+        for step in steps:
+            service.change_status(r.reservation_id, step)
+        try:
+            service.cancel(r.reservation_id)
+            actual = f"Cancelled (status {r.status.value})"
+        except BookingError as err:
+            actual = f"Refused: {err.message}"
+        record("Refused", actual)
+>       assert actual.startswith("Refused")
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x7f2e78f8b870>('Refused')
+E        +    where <built-in method startswith of str object at 0x7f2e78f8b870> = 'Cancelled (status CANCELLED)'.startswith
+
+unit/test_decision_tables.py:81: AssertionError
+______________________ test_equivalence_classes[TC-EP-05] ______________________
+
+service = <reservation_system.service.ReservationService object at 0x7f2e79430d70>
+record = <function record.<locals>._record at 0x7f2e78fa1260>
+tc_id = 'TC-EP-05', field = 'customer_name', value = '    '
+expected = 'Rejected'
+
+    @pytest.mark.parametrize("tc_id, field, value, expected", EP_CASES, ids=[c[0] for c in EP_CASES])
+    def test_equivalence_classes(service, record, tc_id, field, value, expected):
+        actual = attempt(service, booking(**{field: value}))
+        record(expected, actual)
+>       assert actual.startswith(expected), f"{tc_id}: {field}={value!r} -> {actual}"
+E       AssertionError: TC-EP-05: customer_name='    ' -> Accepted (R1001, table T1, deposit Rs.0)
+E       assert False
+E        +  where False = <built-in method startswith of str object at 0x7f2e78f94210>('Rejected')
+E        +    where <built-in method startswith of str object at 0x7f2e78f94210> = 'Accepted (R1001, table T1, deposit Rs.0)'.startswith
+
+unit/test_equivalence_partitioning.py:48: AssertionError
+______________________ test_equivalence_classes[TC-EP-10] ______________________
+
+service = <reservation_system.service.ReservationService object at 0x7f2e79433a80>
+record = <function record.<locals>._record at 0x7f2e78fa2340>
+tc_id = 'TC-EP-10', field = 'phone', value = '987654321012'
+expected = 'Rejected'
+
+    @pytest.mark.parametrize("tc_id, field, value, expected", EP_CASES, ids=[c[0] for c in EP_CASES])
+    def test_equivalence_classes(service, record, tc_id, field, value, expected):
+        actual = attempt(service, booking(**{field: value}))
+        record(expected, actual)
+>       assert actual.startswith(expected), f"{tc_id}: {field}={value!r} -> {actual}"
+E       AssertionError: TC-EP-10: phone='987654321012' -> Accepted (R1001, table T1, deposit Rs.0)
+E       assert False
+E        +  where False = <built-in method startswith of str object at 0x7f2e78f94b10>('Rejected')
+E        +    where <built-in method startswith of str object at 0x7f2e78f94b10> = 'Accepted (R1001, table T1, deposit Rs.0)'.startswith
+
+unit/test_equivalence_partitioning.py:48: AssertionError
+______________________ test_invalid_transitions[TC-ST-06] ______________________
+
+service = <reservation_system.service.ReservationService object at 0x7f2e79460830>
+record = <function record.<locals>._record at 0x7f2e78dddee0>
+tc_id = 'TC-ST-06', start = 'SEATED', target = 'CANCELLED'
+
+    @pytest.mark.parametrize("tc_id, start, target", INVALID, ids=[c[0] for c in INVALID])
+    def test_invalid_transitions(service, record, tc_id, start, target):
+        r = _reservation_in(service, start)
+        try:
+            service.change_status(r.reservation_id, target)
+            actual = f"Allowed: status is now {r.status.value}"
+        except BookingError as err:
+            actual = f"Refused, status stays {r.status.value} ({err.message})"
+        record(f"Refused, status stays {start}", actual)
+>       assert actual.startswith("Refused") and r.status.value == start
+E       AssertionError: assert (False)
+E        +  where False = <built-in method startswith of str object at 0x7f2e78dda8d0>('Refused')
+E        +    where <built-in method startswith of str object at 0x7f2e78dda8d0> = 'Allowed: status is now CANCELLED'.startswith
+
+unit/test_state_transition.py:66: AssertionError
+______________________ test_invalid_transitions[TC-ST-08] ______________________
+
+service = <reservation_system.service.ReservationService object at 0x7f2e78f352b0>
+record = <function record.<locals>._record at 0x7f2e78dde8e0>
+tc_id = 'TC-ST-08', start = 'COMPLETED', target = 'CANCELLED'
+
+    @pytest.mark.parametrize("tc_id, start, target", INVALID, ids=[c[0] for c in INVALID])
+    def test_invalid_transitions(service, record, tc_id, start, target):
+        r = _reservation_in(service, start)
+        try:
+            service.change_status(r.reservation_id, target)
+            actual = f"Allowed: status is now {r.status.value}"
+        except BookingError as err:
+            actual = f"Refused, status stays {r.status.value} ({err.message})"
+        record(f"Refused, status stays {start}", actual)
+>       assert actual.startswith("Refused") and r.status.value == start
+E       AssertionError: assert (False)
+E        +  where False = <built-in method startswith of str object at 0x7f2e78ddb550>('Refused')
+E        +    where <built-in method startswith of str object at 0x7f2e78ddb550> = 'Allowed: status is now CANCELLED'.startswith
+
+unit/test_state_transition.py:66: AssertionError
+__________________ test_TC_UI_04_form_keeps_input_after_error __________________
+
+driver = <selenium.webdriver.chrome.webdriver.WebDriver (session="6446e0d6762d2e3a3a58b35d72de4d48")>
+base_url = 'http://127.0.0.1:59457'
+record = <function record.<locals>._record at 0x7f2e78d339c0>
+
+    def test_TC_UI_04_form_keeps_input_after_error(driver, base_url, record):
+        driver.get(base_url)
+        fill_form(driver, name="Rahul Verma", phone="12345", party="3")
+        submit(driver)
+        wait_for(driver, "form-error")
+        kept_name = driver.find_element(By.ID, "customer_name").get_attribute("value")
+        kept_phone = driver.find_element(By.ID, "phone").get_attribute("value")
+        kept_party = driver.find_element(By.ID, "party_size").get_attribute("value")
+        shot(driver, "TC-UI-04_form_after_error")
+        record("Name 'Rahul Verma', phone '12345', guests '3' still filled in",
+               f"Name '{kept_name}', phone '{kept_phone}', guests '{kept_party}'")
+>       assert (kept_name, kept_phone, kept_party) == ("Rahul Verma", "12345", "3")
+E       AssertionError: assert ('', '', '2') == ('Rahul Verma', '12345', '3')
+E         
+E         At index 0 diff: '' != 'Rahul Verma'
+E         Use -v to get more diff
+
+ui/test_ui_selenium.py:128: AssertionError
+------------------------------ Captured log call -------------------------------
+- generated xml file: /home/roshna/Software-Testing-Portfolio/06_Test_Reports/cycle1/junit.xml -
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.13.18-final-0 _______________
+
+Name                                                                                   Stmts   Miss Branch BrPart  Cover
+------------------------------------------------------------------------------------------------------------------------
+/home/roshna/Software-Testing-Portfolio/application/reservation_system/__init__.py        29      3      8      4    81%
+/home/roshna/Software-Testing-Portfolio/application/reservation_system/api.py             62      7      6      1    85%
+/home/roshna/Software-Testing-Portfolio/application/reservation_system/models.py          43      0      0      0   100%
+/home/roshna/Software-Testing-Portfolio/application/reservation_system/service.py        103      0     30      1    99%
+/home/roshna/Software-Testing-Portfolio/application/reservation_system/validators.py      60      3     20      1    95%
+/home/roshna/Software-Testing-Portfolio/application/reservation_system/web.py             53      7      0      0    87%
+------------------------------------------------------------------------------------------------------------------------
+TOTAL                                                                                    350     20     64      7    93%
+Coverage HTML written to dir /home/roshna/Software-Testing-Portfolio/06_Test_Reports/cycle1/coverage
+- Generated html report: file:///home/roshna/Software-Testing-Portfolio/06_Test_Reports/cycle1/test_report.html -
+=========================== short test summary info ============================
+FAILED unit/test_boundary_value_analysis.py::test_input_boundaries[TC-BVA-05]
+FAILED unit/test_boundary_value_analysis.py::test_input_boundaries[TC-BVA-13]
+FAILED unit/test_boundary_value_analysis.py::test_input_boundaries[TC-BVA-16]
+FAILED unit/test_boundary_value_analysis.py::test_input_boundaries[TC-BVA-22]
+FAILED unit/test_boundary_value_analysis.py::test_overlap_boundaries[TC-BVA-30]
+FAILED unit/test_boundary_value_analysis.py::test_overlap_boundaries[TC-BVA-31]
+FAILED unit/test_decision_tables.py::test_deposit_decision_table[TC-DT-09] - ...
+FAILED unit/test_decision_tables.py::test_cancellation_refused_when_not_confirmed[TC-DT-16]
+FAILED unit/test_equivalence_partitioning.py::test_equivalence_classes[TC-EP-05]
+FAILED unit/test_equivalence_partitioning.py::test_equivalence_classes[TC-EP-10]
+FAILED unit/test_state_transition.py::test_invalid_transitions[TC-ST-06] - As...
+FAILED unit/test_state_transition.py::test_invalid_transitions[TC-ST-08] - As...
+FAILED ui/test_ui_selenium.py::test_TC_UI_04_form_keeps_input_after_error - A...
+======================== 13 failed, 114 passed in 9.43s ========================

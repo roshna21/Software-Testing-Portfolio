@@ -1,0 +1,131 @@
+newman
+
+Restaurant Table Reservation System - API Tests
+
+→ PM-00 Setup: reset test data
+  POST http://127.0.0.1:5000/api/_reset [200 OK, 185B, 26ms]
+  ✓  Reset OK
+
+→ PM-01 Health check
+  GET http://127.0.0.1:5000/api/health [200 OK, 200B, 12ms]
+  ✓  Status 200
+  ✓  Body says ok
+  ✓  Responds under 500 ms
+
+→ PM-02 List tables
+  GET http://127.0.0.1:5000/api/tables [200 OK, 417B, 4ms]
+  ✓  Status 200
+  ✓  8 tables
+  ✓  36 seats in total
+
+→ PM-03 Create reservation (valid)
+  POST http://127.0.0.1:5000/api/reservations [201 CREATED, 470B, 7ms]
+  ✓  Status 201 Created
+  ✓  Status CONFIRMED
+  ✓  Smallest table T1 assigned
+  ✓  Schema has required fields
+
+→ PM-04 Get reservation by ID
+  GET http://127.0.0.1:5000/api/reservations/R1001 [200 OK, 465B, 3ms]
+  ✓  Status 200
+  ✓  Same ID returned
+
+→ PM-05 Invalid phone rejected
+  POST http://127.0.0.1:5000/api/reservations [400 BAD REQUEST, 260B, 4ms]
+  ✓  Status 400
+  ✓  Field is phone
+
+→ PM-06 Party of 8 accepted (upper boundary)
+  POST http://127.0.0.1:5000/api/reservations [400 BAD REQUEST, 243B, 8ms]
+  1. Status 201 Created
+  2. Table T8 assigned
+
+→ PM-07 Party of 7 at 19:00 (takes T8)
+  POST http://127.0.0.1:5000/api/reservations [201 CREATED, 473B, 4ms]
+  ✓  Status 201 Created
+
+→ PM-08 Overlapping booking at 18:30 refused
+  POST http://127.0.0.1:5000/api/reservations [201 CREATED, 472B, 5ms]
+  3. Status 409 Conflict (no double booking)
+  4. Code no_table
+
+→ PM-09 Duplicate phone same day refused
+  POST http://127.0.0.1:5000/api/reservations [409 CONFLICT, 263B, 3ms]
+  ✓  Status 409
+  ✓  Code duplicate
+
+→ PM-10 Seat the guest
+  PATCH http://127.0.0.1:5000/api/reservations/R1001/status [200 OK, 462B, 3ms]
+  ✓  Status 200
+  ✓  Now SEATED
+
+→ PM-11 Complete the visit
+  PATCH http://127.0.0.1:5000/api/reservations/R1001/status [200 OK, 465B, 3ms]
+  ✓  Status 200
+  ✓  Now COMPLETED
+
+→ PM-12 Cancelling a completed visit is refused
+  DELETE http://127.0.0.1:5000/api/reservations/R1001 [200 OK, 465B, 3ms]
+  5. Status 409
+  6. Code invalid_transition
+
+→ PM-13 Unknown reservation gives 404
+  GET http://127.0.0.1:5000/api/reservations/R9999 [404 NOT FOUND, 232B, 2ms]
+  ✓  Status 404
+
+→ PM-14 Availability shows T8 busy
+  GET http://127.0.0.1:5000/api/availability?date=2026-11-20&time=19:30 [200 OK, 554B, 2ms]
+  ✓  Status 200
+  ✓  T8 not available
+
+┌─────────────────────────┬─────────────────┬─────────────────┐
+│                         │        executed │          failed │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              iterations │               1 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│                requests │              15 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│            test-scripts │              15 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│      prerequest-scripts │               0 │               0 │
+├─────────────────────────┼─────────────────┼─────────────────┤
+│              assertions │              31 │               6 │
+├─────────────────────────┴─────────────────┴─────────────────┤
+│ total run duration: 328ms                                   │
+├─────────────────────────────────────────────────────────────┤
+│ total data received: 3.08kB (approx)                        │
+├─────────────────────────────────────────────────────────────┤
+│ average response time: 5ms [min: 2ms, max: 26ms, s.d.: 5ms] │
+└─────────────────────────────────────────────────────────────┘
+
+  #  failure         detail                                                  
+                                                                             
+ 1.  AssertionError  Status 201 Created                                      
+                     expected response to have status code 201 but got 400   
+                     at assertion:0 in test-script                           
+                     inside "PM-06 Party of 8 accepted (upper boundary)"     
+                                                                             
+ 2.  AssertionError  Table T8 assigned                                       
+                     expected undefined to deeply equal 'T8'                 
+                     at assertion:1 in test-script                           
+                     inside "PM-06 Party of 8 accepted (upper boundary)"     
+                                                                             
+ 3.  AssertionError  Status 409 Conflict (no double booking)                 
+                     expected response to have status code 409 but got 201   
+                     at assertion:0 in test-script                           
+                     inside "PM-08 Overlapping booking at 18:30 refused"     
+                                                                             
+ 4.  AssertionError  Code no_table                                           
+                     expected undefined to deeply equal 'no_table'           
+                     at assertion:1 in test-script                           
+                     inside "PM-08 Overlapping booking at 18:30 refused"     
+                                                                             
+ 5.  AssertionError  Status 409                                              
+                     expected response to have status code 409 but got 200   
+                     at assertion:0 in test-script                           
+                     inside "PM-12 Cancelling a completed visit is refused"  
+                                                                             
+ 6.  AssertionError  Code invalid_transition                                 
+                     expected undefined to deeply equal 'invalid_transition' 
+                     at assertion:1 in test-script                           
+                     inside "PM-12 Cancelling a completed visit is refused"  

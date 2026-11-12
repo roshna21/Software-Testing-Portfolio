@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Restaurant Table Reservation System - API Tests" tests="15" time="0.089">
+  <testsuite name="PM-00 Setup: reset test data" id="d02569fc-2881-4eda-bf77-12e1df2eccb7" timestamp="2026-11-12T07:40:43.422Z" tests="1" failures="0" errors="0" time="0.026">
+    <testcase name="Reset OK" time="0.026" classname="Pm00SetupResetTestData"/>
+  </testsuite>
+  <testsuite name="PM-01 Health check" id="a73b8c54-5bad-4984-87d4-72d350316707" timestamp="2026-11-12T07:40:43.422Z" tests="3" failures="0" errors="0" time="0.012">
+    <testcase name="Status 200" time="0.012" classname="Pm01HealthCheck"/>
+    <testcase name="Body says ok" time="0.012" classname="Pm01HealthCheck"/>
+    <testcase name="Responds under 500 ms" time="0.012" classname="Pm01HealthCheck"/>
+  </testsuite>
+  <testsuite name="PM-02 List tables" id="78c4df11-4e14-427c-9c1a-032a6fd697cd" timestamp="2026-11-12T07:40:43.422Z" tests="3" failures="0" errors="0" time="0.004">
+    <testcase name="Status 200" time="0.004" classname="Pm02ListTables"/>
+    <testcase name="8 tables" time="0.004" classname="Pm02ListTables"/>
+    <testcase name="36 seats in total" time="0.004" classname="Pm02ListTables"/>
+  </testsuite>
+  <testsuite name="PM-03 Create reservation (valid)" id="8e1052a9-c3de-4e31-9d09-134be7a0ed1a" timestamp="2026-11-12T07:40:43.422Z" tests="4" failures="0" errors="0" time="0.007">
+    <testcase name="Status 201 Created" time="0.007" classname="Pm03CreateReservationValid"/>
+    <testcase name="Status CONFIRMED" time="0.007" classname="Pm03CreateReservationValid"/>
+    <testcase name="Smallest table T1 assigned" time="0.007" classname="Pm03CreateReservationValid"/>
+    <testcase name="Schema has required fields" time="0.007" classname="Pm03CreateReservationValid"/>
+  </testsuite>
+  <testsuite name="PM-04 Get reservation by ID" id="956d9333-14d1-4de2-aa41-148347a94014" timestamp="2026-11-12T07:40:43.422Z" tests="2" failures="0" errors="0" time="0.003">
+    <testcase name="Status 200" time="0.003" classname="Pm04GetReservationById"/>
+    <testcase name="Same ID returned" time="0.003" classname="Pm04GetReservationById"/>
+  </testsuite>
+  <testsuite name="PM-05 Invalid phone rejected" id="274840bf-d7ff-49ea-97ba-984ba082aad6" timestamp="2026-11-12T07:40:43.422Z" tests="2" failures="0" errors="0" time="0.004">
+    <testcase name="Status 400" time="0.004" classname="Pm05InvalidPhoneRejected"/>
+    <testcase name="Field is phone" time="0.004" classname="Pm05InvalidPhoneRejected"/>
+  </testsuite>
+  <testsuite name="PM-06 Party of 8 accepted (upper boundary)" id="e5916a62-6ac8-466c-8808-4e263fd24766" timestamp="2026-11-12T07:40:43.422Z" tests="2" failures="2" errors="0" time="0.008">
+    <testcase name="Status 201 Created" time="0.008" classname="Pm06PartyOf8AcceptedUpperBoundary">
+      <failure type="AssertionFailure" message="expected response to have status code 201 but got 400">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ac0a37b3-81cb-4c75-a541-7e9f3f37d7c7.]]>
+        <![CDATA[Collection name: Restaurant Table Reservation System - API Tests.]]>
+        <![CDATA[Request name: PM-06 Party of 8 accepted (upper boundary).]]>
+        <![CDATA[Test description: Status 201 Created.]]>
+        <![CDATA[Error message: expected response to have status code 201 but got 400.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 201 but got 400
+   at Object.eval sandbox-script.js:1:7).]]>
+      </failure>
+    </testcase>
+    <testcase name="Table T8 assigned" time="0.008" classname="Pm06PartyOf8AcceptedUpperBoundary">
+      <failure type="AssertionFailure" message="expected undefined to deeply equal 'T8'">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ac0a37b3-81cb-4c75-a541-7e9f3f37d7c7.]]>
+        <![CDATA[Collection name: Restaurant Table Reservation System - API Tests.]]>
+        <![CDATA[Request name: PM-06 Party of 8 accepted (upper boundary).]]>
+        <![CDATA[Test description: Table T8 assigned.]]>
+        <![CDATA[Error message: expected undefined to deeply equal 'T8'.]]>
+        <![CDATA[Stacktrace: AssertionError: expected undefined to deeply equal 'T8'
+   at Object.eval sandbox-script.js:2:7).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="PM-07 Party of 7 at 19:00 (takes T8)" id="840f537c-5175-431e-94dc-dc67103f4f91" timestamp="2026-11-12T07:40:43.422Z" tests="1" failures="0" errors="0" time="0.004">
+    <testcase name="Status 201 Created" time="0.004" classname="Pm07PartyOf7At1900TakesT8"/>
+  </testsuite>
+  <testsuite name="PM-08 Overlapping booking at 18:30 refused" id="08bf1b65-198a-4d2c-804d-e689b57af57f" timestamp="2026-11-12T07:40:43.422Z" tests="2" failures="2" errors="0" time="0.005">
+    <testcase name="Status 409 Conflict (no double booking)" time="0.005" classname="Pm08OverlappingBookingAt1830Refused">
+      <failure type="AssertionFailure" message="expected response to have status code 409 but got 201">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ac0a37b3-81cb-4c75-a541-7e9f3f37d7c7.]]>
+        <![CDATA[Collection name: Restaurant Table Reservation System - API Tests.]]>
+        <![CDATA[Request name: PM-08 Overlapping booking at 18:30 refused.]]>
+        <![CDATA[Test description: Status 409 Conflict (no double booking).]]>
+        <![CDATA[Error message: expected response to have status code 409 but got 201.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 409 but got 201
+   at Object.eval sandbox-script.js:1:9).]]>
+      </failure>
+    </testcase>
+    <testcase name="Code no_table" time="0.005" classname="Pm08OverlappingBookingAt1830Refused">
+      <failure type="AssertionFailure" message="expected undefined to deeply equal 'no_table'">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ac0a37b3-81cb-4c75-a541-7e9f3f37d7c7.]]>
+        <![CDATA[Collection name: Restaurant Table Reservation System - API Tests.]]>
+        <![CDATA[Request name: PM-08 Overlapping booking at 18:30 refused.]]>
+        <![CDATA[Test description: Code no_table.]]>
+        <![CDATA[Error message: expected undefined to deeply equal 'no_table'.]]>
+        <![CDATA[Stacktrace: AssertionError: expected undefined to deeply equal 'no_table'
+   at Object.eval sandbox-script.js:2:9).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="PM-09 Duplicate phone same day refused" id="dc1fdc49-7171-4391-8a17-9798815b4c58" timestamp="2026-11-12T07:40:43.422Z" tests="2" failures="0" errors="0" time="0.003">
+    <testcase name="Status 409" time="0.003" classname="Pm09DuplicatePhoneSameDayRefused"/>
+    <testcase name="Code duplicate" time="0.003" classname="Pm09DuplicatePhoneSameDayRefused"/>
+  </testsuite>
+  <testsuite name="PM-10 Seat the guest" id="56da77cf-1506-43d2-b387-41378d5f866d" timestamp="2026-11-12T07:40:43.422Z" tests="2" failures="0" errors="0" time="0.003">
+    <testcase name="Status 200" time="0.003" classname="Pm10SeatTheGuest"/>
+    <testcase name="Now SEATED" time="0.003" classname="Pm10SeatTheGuest"/>
+  </testsuite>
+  <testsuite name="PM-11 Complete the visit" id="2ba785fa-94e0-422f-b896-d3422264fdad" timestamp="2026-11-12T07:40:43.422Z" tests="2" failures="0" errors="0" time="0.003">
+    <testcase name="Status 200" time="0.003" classname="Pm11CompleteTheVisit"/>
+    <testcase name="Now COMPLETED" time="0.003" classname="Pm11CompleteTheVisit"/>
+  </testsuite>
+  <testsuite name="PM-12 Cancelling a completed visit is refused" id="10642df3-3079-40e1-81f3-5746a80a1797" timestamp="2026-11-12T07:40:43.422Z" tests="2" failures="2" errors="0" time="0.003">
+    <testcase name="Status 409" time="0.003" classname="Pm12CancellingACompletedVisitIsRefused">
+      <failure type="AssertionFailure" message="expected response to have status code 409 but got 200">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ac0a37b3-81cb-4c75-a541-7e9f3f37d7c7.]]>
+        <![CDATA[Collection name: Restaurant Table Reservation System - API Tests.]]>
+        <![CDATA[Request name: PM-12 Cancelling a completed visit is refused.]]>
+        <![CDATA[Test description: Status 409.]]>
+        <![CDATA[Error message: expected response to have status code 409 but got 200.]]>
+        <![CDATA[Stacktrace: AssertionError: expected response to have status code 409 but got 200
+   at Object.eval sandbox-script.js:1:13).]]>
+      </failure>
+    </testcase>
+    <testcase name="Code invalid_transition" time="0.003" classname="Pm12CancellingACompletedVisitIsRefused">
+      <failure type="AssertionFailure" message="expected undefined to deeply equal 'invalid_transition'">
+        <![CDATA[Failed 1 times.]]>
+        <![CDATA[Collection JSON ID: ac0a37b3-81cb-4c75-a541-7e9f3f37d7c7.]]>
+        <![CDATA[Collection name: Restaurant Table Reservation System - API Tests.]]>
+        <![CDATA[Request name: PM-12 Cancelling a completed visit is refused.]]>
+        <![CDATA[Test description: Code invalid_transition.]]>
+        <![CDATA[Error message: expected undefined to deeply equal 'invalid_transition'.]]>
+        <![CDATA[Stacktrace: AssertionError: expected undefined to deeply equal 'invalid_transition'
+   at Object.eval sandbox-script.js:2:13).]]>
+      </failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="PM-13 Unknown reservation gives 404" id="454e988a-7a84-478f-a800-66373b40ebc2" timestamp="2026-11-12T07:40:43.422Z" tests="1" failures="0" errors="0" time="0.002">
+    <testcase name="Status 404" time="0.002" classname="Pm13UnknownReservationGives404"/>
+  </testsuite>
+  <testsuite name="PM-14 Availability shows T8 busy" id="a574e8fb-6457-43c8-8b7a-31e32a934ec9" timestamp="2026-11-12T07:40:43.422Z" tests="2" failures="0" errors="0" time="0.002">
+    <testcase name="Status 200" time="0.002" classname="Pm14AvailabilityShowsT8Busy"/>
+    <testcase name="T8 not available" time="0.002" classname="Pm14AvailabilityShowsT8Busy"/>
+  </testsuite>
+</testsuites>
