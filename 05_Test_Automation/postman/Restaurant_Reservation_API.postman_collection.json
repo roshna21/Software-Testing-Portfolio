@@ -1,0 +1,579 @@
+{
+  "info": {
+    "name": "Restaurant Table Reservation System - API Tests",
+    "description": "Postman collection for the REST API. Run with Newman against a server started in test mode (see run_postman.sh).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "PM-00 Setup: reset test data",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/_reset",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "_reset"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Reset OK', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "PM-01 Health check",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "health"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('Body says ok', () => pm.expect(pm.response.json().status).to.eql('ok'));",
+              "pm.test('Responds under 500 ms', () => pm.expect(pm.response.responseTime).to.be.below(500));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "PM-02 List tables",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/tables",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "tables"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "const t = pm.response.json();",
+              "pm.test('8 tables', () => pm.expect(t.length).to.eql(8));",
+              "pm.test('36 seats in total', () => pm.expect(t.reduce((s, x) => s + x.capacity, 0)).to.eql(36));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "PM-03 Create reservation (valid)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/reservations",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "reservations"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customer_name\": \"Priya Sharma\",\n  \"phone\": \"9876543210\",\n  \"email\": \"priya@example.com\",\n  \"party_size\": 2,\n  \"date\": \"2026-11-18\",\n  \"time\": \"13:00\"\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 201 Created', () => pm.response.to.have.status(201));",
+              "const r = pm.response.json();",
+              "pm.test('Status CONFIRMED', () => pm.expect(r.status).to.eql('CONFIRMED'));",
+              "pm.test('Smallest table T1 assigned', () => pm.expect(r.table_id).to.eql('T1'));",
+              "pm.test('Schema has required fields', () => ['reservation_id','table_id','deposit','end_time'].forEach(k => pm.expect(r).to.have.property(k)));",
+              "pm.collectionVariables.set('reservationId', r.reservation_id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "PM-04 Get reservation by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/reservations/{{reservationId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "reservations",
+            "{{reservationId}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('Same ID returned', () => pm.expect(pm.response.json().reservation_id).to.eql(pm.collectionVariables.get('reservationId')));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "PM-05 Invalid phone rejected",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/reservations",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "reservations"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customer_name\": \"Ravi Kumar\",\n  \"phone\": \"12345\",\n  \"email\": \"priya@example.com\",\n  \"party_size\": 2,\n  \"date\": \"2026-11-18\",\n  \"time\": \"13:00\"\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 400', () => pm.response.to.have.status(400));",
+              "pm.test('Field is phone', () => pm.expect(pm.response.json().field).to.eql('phone'));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "PM-06 Party of 8 accepted (upper boundary)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/reservations",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "reservations"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customer_name\": \"Priya Sharma\",\n  \"phone\": \"9123400001\",\n  \"email\": \"priya@example.com\",\n  \"party_size\": 8,\n  \"date\": \"2026-11-19\",\n  \"time\": \"13:00\"\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 201 Created', () => pm.response.to.have.status(201));",
+              "pm.test('Table T8 assigned', () => pm.expect(pm.response.json().table_id).to.eql('T8'));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "PM-07 Party of 7 at 19:00 (takes T8)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/reservations",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "reservations"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customer_name\": \"Priya Sharma\",\n  \"phone\": \"9123400002\",\n  \"email\": \"priya@example.com\",\n  \"party_size\": 7,\n  \"date\": \"2026-11-20\",\n  \"time\": \"19:00\"\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 201 Created', () => pm.response.to.have.status(201));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "PM-08 Overlapping booking at 18:30 refused",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/reservations",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "reservations"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customer_name\": \"Priya Sharma\",\n  \"phone\": \"9123400003\",\n  \"email\": \"priya@example.com\",\n  \"party_size\": 7,\n  \"date\": \"2026-11-20\",\n  \"time\": \"18:30\"\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 409 Conflict (no double booking)', () => pm.response.to.have.status(409));",
+              "pm.test('Code no_table', () => pm.expect(pm.response.json().code).to.eql('no_table'));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "PM-09 Duplicate phone same day refused",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/reservations",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "reservations"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customer_name\": \"Priya Sharma\",\n  \"phone\": \"9876543210\",\n  \"email\": \"priya@example.com\",\n  \"party_size\": 2,\n  \"date\": \"2026-11-18\",\n  \"time\": \"20:00\"\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 409', () => pm.response.to.have.status(409));",
+              "pm.test('Code duplicate', () => pm.expect(pm.response.json().code).to.eql('duplicate'));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "PM-10 Seat the guest",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/reservations/{{reservationId}}/status",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "reservations",
+            "{{reservationId}}",
+            "status"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"SEATED\"\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('Now SEATED', () => pm.expect(pm.response.json().status).to.eql('SEATED'));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "PM-11 Complete the visit",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/reservations/{{reservationId}}/status",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "reservations",
+            "{{reservationId}}",
+            "status"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"COMPLETED\"\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('Now COMPLETED', () => pm.expect(pm.response.json().status).to.eql('COMPLETED'));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "PM-12 Cancelling a completed visit is refused",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/reservations/{{reservationId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "reservations",
+            "{{reservationId}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 409', () => pm.response.to.have.status(409));",
+              "pm.test('Code invalid_transition', () => pm.expect(pm.response.json().code).to.eql('invalid_transition'));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "PM-13 Unknown reservation gives 404",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/reservations/R9999",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "reservations",
+            "R9999"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 404', () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "PM-14 Availability shows T8 busy",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/availability?date=2026-11-20&time=19:30",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "availability"
+          ],
+          "query": [
+            {
+              "key": "date",
+              "value": "2026-11-20"
+            },
+            {
+              "key": "time",
+              "value": "19:30"
+            }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "const t8 = pm.response.json().find(t => t.table_id === 'T8');",
+              "pm.test('T8 not available', () => pm.expect(t8.available).to.be.false);"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "reservationId",
+      "value": ""
+    }
+  ]
+}
