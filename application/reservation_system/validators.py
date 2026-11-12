@@ -35,7 +35,7 @@ def validate_name(name) -> str:
 def validate_phone(phone) -> str:
     """R2: Indian mobile number - exactly 10 digits starting with 6, 7, 8 or 9."""
     phone = str(phone or "").strip()
-    if not re.match(r"[6-9]\d{9}", phone):
+    if not re.fullmatch(r"[6-9]\d{9}", phone):
         raise ValidationError("phone", "Phone must be a 10-digit mobile number starting with 6-9")
     return phone
 
