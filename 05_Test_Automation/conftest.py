@@ -1,11 +1,13 @@
 """Shared pytest fixtures for the Restaurant Table Reservation System test suite."""
+import os
 import sys
 from datetime import datetime
 from pathlib import Path
 
 import pytest
 
-APP_DIR = Path(__file__).resolve().parents[1] / "application"
+# RTRS_APP_DIR lets the mutation tester point the tests at a mutated copy of the app.
+APP_DIR = Path(os.environ.get("RTRS_APP_DIR", Path(__file__).resolve().parents[1] / "application"))
 sys.path.insert(0, str(APP_DIR))
 
 from reservation_system import create_app  # noqa: E402

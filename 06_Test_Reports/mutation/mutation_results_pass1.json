@@ -1,0 +1,575 @@
+{
+  "total": 71,
+  "killed": 64,
+  "seconds": 36.6,
+  "mutants": [
+    {
+      "file": "reservation_system/validators.py",
+      "line": 6,
+      "operator": "CRP",
+      "change": "30 -> 31",
+      "code": "MAX_DAYS_AHEAD = 30",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 5,
+      "operator": "CRP",
+      "change": "1 -> 2",
+      "code": "MIN_PARTY, MAX_PARTY = 1, 8",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 5,
+      "operator": "CRP",
+      "change": "8 -> 9",
+      "code": "MIN_PARTY, MAX_PARTY = 1, 8",
+      "status": "survived"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 7,
+      "operator": "CRP",
+      "change": "11 -> 12",
+      "code": "OPENING_SLOT = time(11, 0)",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 7,
+      "operator": "CRP",
+      "change": "0 -> 1",
+      "code": "OPENING_SLOT = time(11, 0)",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 8,
+      "operator": "CRP",
+      "change": "21 -> 22",
+      "code": "LAST_SLOT = time(21, 30)",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 8,
+      "operator": "CRP",
+      "change": "30 -> 31",
+      "code": "LAST_SLOT = time(21, 30)",
+      "status": "survived"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 28,
+      "operator": "UOI",
+      "change": "remove `not`",
+      "code": "if not 2 <= len(name) <= 50:",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 30,
+      "operator": "UOI",
+      "change": "remove `not`",
+      "code": "if not NAME_PATTERN.match(name):",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 38,
+      "operator": "UOI",
+      "change": "remove `not`",
+      "code": "if not re.fullmatch(r\"[6-9]\\d{9}\", phone):",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 46,
+      "operator": "LCR",
+      "change": "and -> or",
+      "code": "if email and not EMAIL_PATTERN.match(email):",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 57,
+      "operator": "UOI",
+      "change": "remove `not`",
+      "code": "if not MIN_PARTY <= size <= MAX_PARTY:",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 68,
+      "operator": "ROR",
+      "change": "< -> <=",
+      "code": "if booking_date < today:",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 70,
+      "operator": "ROR",
+      "change": "> -> >=",
+      "code": "if booking_date > today + timedelta(days=MAX_DAYS_AHEAD):",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 81,
+      "operator": "ROR",
+      "change": "not in -> in",
+      "code": "if slot.minute not in (0, 30):",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 83,
+      "operator": "UOI",
+      "change": "remove `not`",
+      "code": "if not OPENING_SLOT <= slot <= LAST_SLOT:",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 28,
+      "operator": "ROR",
+      "change": "<= -> <",
+      "code": "if not 2 <= len(name) <= 50:",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 28,
+      "operator": "ROR",
+      "change": "<= -> <",
+      "code": "if not 2 <= len(name) <= 50:",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 46,
+      "operator": "UOI",
+      "change": "remove `not`",
+      "code": "if email and not EMAIL_PATTERN.match(email):",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 57,
+      "operator": "ROR",
+      "change": "<= -> <",
+      "code": "if not MIN_PARTY <= size <= MAX_PARTY:",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 57,
+      "operator": "ROR",
+      "change": "<= -> <",
+      "code": "if not MIN_PARTY <= size <= MAX_PARTY:",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 70,
+      "operator": "AOR",
+      "change": "+ -> -",
+      "code": "if booking_date > today + timedelta(days=MAX_DAYS_AHEAD):",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 83,
+      "operator": "ROR",
+      "change": "<= -> <",
+      "code": "if not OPENING_SLOT <= slot <= LAST_SLOT:",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 83,
+      "operator": "ROR",
+      "change": "<= -> <",
+      "code": "if not OPENING_SLOT <= slot <= LAST_SLOT:",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 28,
+      "operator": "CRP",
+      "change": "2 -> 3",
+      "code": "if not 2 <= len(name) <= 50:",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 28,
+      "operator": "CRP",
+      "change": "50 -> 51",
+      "code": "if not 2 <= len(name) <= 50:",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 81,
+      "operator": "CRP",
+      "change": "0 -> 1",
+      "code": "if slot.minute not in (0, 30):",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 81,
+      "operator": "CRP",
+      "change": "30 -> 31",
+      "code": "if slot.minute not in (0, 30):",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 37,
+      "operator": "LCR",
+      "change": "or -> and",
+      "code": "phone = str(phone or \"\").strip()",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/validators.py",
+      "line": 45,
+      "operator": "LCR",
+      "change": "or -> and",
+      "code": "email = str(email or \"\").strip()",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 9,
+      "operator": "CRP",
+      "change": "6 -> 7",
+      "code": "LARGE_PARTY = 6                 # R8: parties of 6+ pay a per-guest deposit",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 10,
+      "operator": "CRP",
+      "change": "100 -> 101",
+      "code": "LARGE_PARTY_DEPOSIT_PER_GUEST = 100",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 12,
+      "operator": "CRP",
+      "change": "300 -> 301",
+      "code": "WEEKEND_PEAK_DEPOSIT = 300      # R8: flat deposit for weekend peak slots",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 13,
+      "operator": "CRP",
+      "change": "5 -> 6",
+      "code": "SATURDAY = 5                    # date.weekday(): Monday = 0 ... Sunday = 6",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 48,
+      "operator": "CRP",
+      "change": "0 -> 1",
+      "code": "deposit = 0",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 49,
+      "operator": "ROR",
+      "change": ">= -> >",
+      "code": "if party_size >= LARGE_PARTY:",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 51,
+      "operator": "ROR",
+      "change": ">= -> >",
+      "code": "is_weekend = booking_date.weekday() >= SATURDAY",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 52,
+      "operator": "ROR",
+      "change": "<= -> <",
+      "code": "is_peak = PEAK_START <= slot <= PEAK_END",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 52,
+      "operator": "ROR",
+      "change": "<= -> <",
+      "code": "is_peak = PEAK_START <= slot <= PEAK_END",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 53,
+      "operator": "LCR",
+      "change": "and -> or",
+      "code": "if is_weekend and is_peak:",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 63,
+      "operator": "LCR",
+      "change": "and -> or",
+      "code": "return start < existing.end and existing.start < end",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 11,
+      "operator": "CRP",
+      "change": "19 -> 20",
+      "code": "PEAK_START, PEAK_END = time(19, 0), time(21, 30)",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 11,
+      "operator": "CRP",
+      "change": "0 -> 1",
+      "code": "PEAK_START, PEAK_END = time(19, 0), time(21, 30)",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 11,
+      "operator": "CRP",
+      "change": "21 -> 22",
+      "code": "PEAK_START, PEAK_END = time(19, 0), time(21, 30)",
+      "status": "survived"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 11,
+      "operator": "CRP",
+      "change": "30 -> 31",
+      "code": "PEAK_START, PEAK_END = time(19, 0), time(21, 30)",
+      "status": "survived"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 14,
+      "operator": "CRP",
+      "change": "2 -> 3",
+      "code": "FREE_CANCELLATION_WINDOW = timedelta(hours=2)   # R10",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 50,
+      "operator": "AOR",
+      "change": "* -> +",
+      "code": "deposit += party_size * LARGE_PARTY_DEPOSIT_PER_GUEST",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 63,
+      "operator": "ROR",
+      "change": "< -> <=",
+      "code": "return start < existing.end and existing.start < end",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 63,
+      "operator": "ROR",
+      "change": "< -> <=",
+      "code": "return start < existing.end and existing.start < end",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 89,
+      "operator": "AOR",
+      "change": "+ -> -",
+      "code": "end = start + RESERVATION_DURATION",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 101,
+      "operator": "AOR",
+      "change": "+ -> -",
+      "code": "end = start + RESERVATION_DURATION",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 119,
+      "operator": "ROR",
+      "change": "<= -> <",
+      "code": "if start <= now:",
+      "status": "survived"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 150,
+      "operator": "ROR",
+      "change": "== -> !=",
+      "code": "if new_status == Status.CANCELLED:",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 152,
+      "operator": "ROR",
+      "change": "not in -> in",
+      "code": "if new_status not in ALLOWED_TRANSITIONS[reservation.status]:",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 162,
+      "operator": "ROR",
+      "change": "not in -> in",
+      "code": "if Status.CANCELLED not in ALLOWED_TRANSITIONS[reservation.status]:",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 166,
+      "operator": "AOR",
+      "change": "- -> +",
+      "code": "notice = reservation.start - self.clock()",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 69,
+      "operator": "LCR",
+      "change": "or -> and",
+      "code": "self.tables = sorted(tables or DEFAULT_TABLES, key=lambda t: (t.capacity, t.table_id))",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 72,
+      "operator": "CRP",
+      "change": "1001 -> 1002",
+      "code": "self._ids = count(1001)",
+      "status": "survived"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 91,
+      "operator": "ROR",
+      "change": "< -> <=",
+      "code": "if table.capacity < party_size:",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 95,
+      "operator": "UOI",
+      "change": "remove `not`",
+      "code": "if not busy:",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 124,
+      "operator": "LCR",
+      "change": "and -> or",
+      "code": "if r.phone == phone and r.is_active and r.start.date() == booking_date:",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 167,
+      "operator": "ROR",
+      "change": ">= -> >",
+      "code": "reservation.refund = reservation.deposit if notice >= FREE_CANCELLATION_WINDOW else 0",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 167,
+      "operator": "CRP",
+      "change": "0 -> 1",
+      "code": "reservation.refund = reservation.deposit if notice >= FREE_CANCELLATION_WINDOW else 0",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 124,
+      "operator": "ROR",
+      "change": "== -> !=",
+      "code": "if r.phone == phone and r.is_active and r.start.date() == booking_date:",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 124,
+      "operator": "ROR",
+      "change": "== -> !=",
+      "code": "if r.phone == phone and r.is_active and r.start.date() == booking_date:",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 84,
+      "operator": "ROR",
+      "change": "== -> !=",
+      "code": "items = [r for r in items if r.start.date() == on_date]",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 93,
+      "operator": "LCR",
+      "change": "and -> or",
+      "code": "busy = any(r.table_id == table.table_id and r.is_active and overlaps(r, start, end)",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 104,
+      "operator": "LCR",
+      "change": "and -> or",
+      "code": "busy = any(r.table_id == table.table_id and r.is_active and overlaps(r, start, end)",
+      "status": "survived"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 106,
+      "operator": "UOI",
+      "change": "remove `not`",
+      "code": "result.append({\"table_id\": table.table_id, \"capacity\": table.capacity, \"available\": not busy})",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 93,
+      "operator": "ROR",
+      "change": "== -> !=",
+      "code": "busy = any(r.table_id == table.table_id and r.is_active and overlaps(r, start, end)",
+      "status": "killed"
+    },
+    {
+      "file": "reservation_system/service.py",
+      "line": 104,
+      "operator": "ROR",
+      "change": "== -> !=",
+      "code": "busy = any(r.table_id == table.table_id and r.is_active and overlaps(r, start, end)",
+      "status": "killed"
+    }
+  ]
+}
