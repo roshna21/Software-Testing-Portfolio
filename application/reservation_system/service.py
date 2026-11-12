@@ -10,6 +10,7 @@ LARGE_PARTY = 6                 # R8: parties of 6+ pay a per-guest deposit
 LARGE_PARTY_DEPOSIT_PER_GUEST = 100
 PEAK_START, PEAK_END = time(19, 0), time(21, 30)
 WEEKEND_PEAK_DEPOSIT = 300      # R8: flat deposit for weekend peak slots
+SATURDAY = 5                    # date.weekday(): Monday = 0 ... Sunday = 6
 FREE_CANCELLATION_WINDOW = timedelta(hours=2)   # R10
 
 # R9: which status changes are allowed.
@@ -47,7 +48,7 @@ def calculate_deposit(party_size: int, booking_date: date, slot: time) -> int:
     deposit = 0
     if party_size >= LARGE_PARTY:
         deposit += party_size * LARGE_PARTY_DEPOSIT_PER_GUEST
-    is_weekend = booking_date.weekday() >= 4
+    is_weekend = booking_date.weekday() >= SATURDAY
     is_peak = PEAK_START <= slot <= PEAK_END
     if is_weekend and is_peak:
         deposit += WEEKEND_PEAK_DEPOSIT
