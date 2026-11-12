@@ -27,8 +27,9 @@ def book():
     try:
         reservation = get_service().create(request.form.to_dict())
     except (ValidationError, BookingError) as err:
-        # Show the error and send the user back to the form.
-        return render_template("index.html", form=_form_defaults(), slots=TIME_SLOTS,
+        # Show the error and keep what the user typed so they only fix the bad field.
+        form = {**_form_defaults(), **request.form.to_dict()}
+        return render_template("index.html", form=form, slots=TIME_SLOTS,
                                error=err.message), 400
     return redirect(url_for("web.reservation", reservation_id=reservation.reservation_id, new=1))
 
