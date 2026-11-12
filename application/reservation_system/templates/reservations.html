@@ -22,7 +22,7 @@
       <td>{{ r.table_id }}</td>
       <td>₹{{ r.deposit }}</td>
       <td><span class="badge badge-{{ r.status.value|lower }}" data-status>{{ r.status.value }}</span></td>
-      <td class="actions">
+      <td><div class="actions">
         {% set next_url = url_for('web.reservations', date=day) %}
         {% if r.status.value == 'CONFIRMED' %}
           {% for status, label in [('SEATED','Seat'), ('NO_SHOW','No-show')] %}
@@ -41,7 +41,7 @@
             <button class="btn btn-small" data-action="COMPLETED">Complete</button>
           </form>
         {% else %}<span class="muted">—</span>{% endif %}
-      </td>
+      </div></td>
     </tr>
   {% endfor %}
   </tbody>
