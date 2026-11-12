@@ -24,7 +24,7 @@ def validate_name(name) -> str:
     """R1: 2-50 characters, letters and spaces only."""
     if name is None:
         raise ValidationError("customer_name", "Name is required")
-    name = str(name)
+    name = str(name).strip()
     if not 2 <= len(name) <= 50:
         raise ValidationError("customer_name", "Name must be 2 to 50 characters")
     if not NAME_PATTERN.match(name):
