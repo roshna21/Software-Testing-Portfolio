@@ -159,7 +159,7 @@ class ReservationService:
     def cancel(self, reservation_id: str) -> Reservation:
         """R10: cancel; refund the deposit only if 2+ hours before the slot."""
         reservation = self.get(reservation_id)
-        if reservation.status in (Status.CANCELLED, Status.NO_SHOW):
+        if Status.CANCELLED not in ALLOWED_TRANSITIONS[reservation.status]:
             raise BookingError(
                 f"Cannot change status from {reservation.status.value} to CANCELLED",
                 "invalid_transition")
