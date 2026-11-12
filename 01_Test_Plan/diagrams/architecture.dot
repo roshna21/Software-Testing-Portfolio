@@ -1,0 +1,15 @@
+digraph G {
+  rankdir=LR; bgcolor="white"; pad=0.3;
+  node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=12, color="#b5651a", fillcolor="#fdf0e1"];
+  edge [color="#7a6a5d", fontname="Helvetica", fontsize=10];
+  C [label="Customer\nbrowser", fillcolor="#e8f0f8", color="#2c5d8a"];
+  S [label="Staff\nbrowser", fillcolor="#e8f0f8", color="#2c5d8a"];
+  P [label="Postman /\nAPI client", fillcolor="#e8f0f8", color="#2c5d8a"];
+  W [label="Web UI\nweb.py + templates"];
+  A [label="REST API\napi.py"];
+  SV [label="Booking engine\nservice.py", fillcolor="#f9d9b0"];
+  V [label="Validators\nvalidators.py"];
+  M [label="In-memory store\nreservations + 8 tables", shape=cylinder, fillcolor="#e8f4ec", color="#2f7d4f"];
+  C -> W [label="HTML forms"]; S -> W; P -> A [label="JSON"];
+  W -> SV; A -> SV; SV -> V; SV -> M;
+}

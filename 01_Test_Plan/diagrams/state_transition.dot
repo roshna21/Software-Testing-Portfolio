@@ -1,0 +1,15 @@
+digraph G {
+  rankdir=LR; bgcolor="white"; pad=0.3;
+  node [shape=circle, style=filled, fontname="Helvetica", fontsize=11, fixedsize=true, width=1.35, color="#444444"];
+  edge [fontname="Helvetica", fontsize=10, color="#555555"];
+  start [shape=point, width=0.18, fillcolor=black];
+  CONFIRMED [fillcolor="#cfe0f1"]; SEATED [fillcolor="#f9d9b0"];
+  COMPLETED [shape=doublecircle, fillcolor="#cde8d6", width=1.25];
+  CANCELLED [shape=doublecircle, fillcolor="#f3caca", width=1.25];
+  NO_SHOW [shape=doublecircle, fillcolor="#dddddd", width=1.25, label="NO_SHOW"];
+  start -> CONFIRMED [label="  book  "];
+  CONFIRMED -> SEATED [label="  seat  "];
+  SEATED -> COMPLETED [label="  complete  "];
+  CONFIRMED -> CANCELLED [label="  cancel  "];
+  CONFIRMED -> NO_SHOW [label="  mark no-show  "];
+}
