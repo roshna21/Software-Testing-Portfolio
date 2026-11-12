@@ -3,7 +3,7 @@
 | Item | Detail |
 |---|---|
 | Build under test | Restaurant Table Reservation System **v1.0.0** |
-| Executed on | 12 Nov 2026, 07:40 |
+| Executed on | 12 Nov 2026, 07:41 |
 | Test clock | Mon 16 Nov 2026, 10:00 (frozen) |
 | Environment | Python 3, Flask, pytest, Selenium 4 + Chrome (headless), Newman |
 | Executed | **127** test cases + **15** Postman requests |
@@ -27,19 +27,19 @@
 
 | TC ID | Expected | Actual | Defect |
 |---|---|---|---|
-| TC-EP-05 | Rejected | Accepted (R1001, table T1, deposit Rs.0) | to be logged |
-| TC-EP-10 | Rejected | Accepted (R1001, table T1, deposit Rs.0) | to be logged |
-| TC-BVA-05 | Accepted | Rejected: Party size must be between 1 and 8 | to be logged |
-| TC-BVA-13 | Rejected | Accepted (R1001, table T1, deposit Rs.0) | to be logged |
-| TC-BVA-16 | Rejected | Accepted (R1001, table T1, deposit Rs.0) | to be logged |
-| TC-BVA-22 | Rejected | Accepted (R1001, table T1, deposit Rs.0) | to be logged |
-| TC-BVA-30 | Rejected | Accepted (R1002, table T8, deposit Rs.700) | to be logged |
-| TC-BVA-31 | Rejected | Accepted (R1002, table T8, deposit Rs.700) | to be logged |
-| TC-DT-09 | Deposit Rs.0 | Deposit Rs.300 | to be logged |
-| TC-DT-16 | Refused | Cancelled (status CANCELLED) | to be logged |
-| TC-ST-06 | Refused, status stays SEATED | Allowed: status is now CANCELLED | to be logged |
-| TC-ST-08 | Refused, status stays COMPLETED | Allowed: status is now CANCELLED | to be logged |
-| TC-UI-04 | Name 'Rahul Verma', phone '12345', guests '3' still filled in | Name '', phone '', guests '2' | to be logged |
+| TC-EP-05 | Rejected | Accepted (R1001, table T1, deposit Rs.0) | DEF-006 |
+| TC-EP-10 | Rejected | Accepted (R1001, table T1, deposit Rs.0) | DEF-002 |
+| TC-BVA-05 | Accepted | Rejected: Party size must be between 1 and 8 | DEF-001 |
+| TC-BVA-13 | Rejected | Accepted (R1001, table T1, deposit Rs.0) | DEF-006 |
+| TC-BVA-16 | Rejected | Accepted (R1001, table T1, deposit Rs.0) | DEF-002 |
+| TC-BVA-22 | Rejected | Accepted (R1001, table T1, deposit Rs.0) | DEF-007 |
+| TC-BVA-30 | Rejected | Accepted (R1002, table T8, deposit Rs.700) | DEF-003 |
+| TC-BVA-31 | Rejected | Accepted (R1002, table T8, deposit Rs.700) | DEF-003 |
+| TC-DT-09 | Deposit Rs.0 | Deposit Rs.300 | DEF-004 |
+| TC-DT-16 | Refused | Cancelled (status CANCELLED) | DEF-005 |
+| TC-ST-06 | Refused, status stays SEATED | Allowed: status is now CANCELLED | DEF-005 |
+| TC-ST-08 | Refused, status stays COMPLETED | Allowed: status is now CANCELLED | DEF-005 |
+| TC-UI-04 | Name 'Rahul Verma', phone '12345', guests '3' still filled in | Name '', phone '', guests '2' | DEF-008 |
 
 ## Equivalence Partitioning
 
@@ -49,12 +49,12 @@
 | TC-EP-02 | I1 · name = `` (empty) | Rejected | Rejected: Name must be 2 to 50 characters | ✅ Pass |  |
 | TC-EP-03 | I2 · name = `Priya123` | Rejected | Rejected: Name may contain only letters and spaces | ✅ Pass |  |
 | TC-EP-04 | I3 · name = `Priya@#` | Rejected | Rejected: Name may contain only letters and spaces | ✅ Pass |  |
-| TC-EP-05 | I4 · name = `"    "` (4 spaces) | Rejected | Accepted (R1001, table T1, deposit Rs.0) | ❌ Fail |  |
+| TC-EP-05 | I4 · name = `"    "` (4 spaces) | Rejected | Accepted (R1001, table T1, deposit Rs.0) | ❌ Fail | DEF-006 |
 | TC-EP-06 | V2 · phone = `9876543210` | Accepted | Accepted (R1001, table T1, deposit Rs.0) | ✅ Pass |  |
 | TC-EP-07 | I5 · phone = `5876543210` | Rejected | Rejected: Phone must be a 10-digit mobile number starting with 6-9 | ✅ Pass |  |
 | TC-EP-08 | I6 · phone = `98765abcde` | Rejected | Rejected: Phone must be a 10-digit mobile number starting with 6-9 | ✅ Pass |  |
 | TC-EP-09 | I7 · phone = `98765` | Rejected | Rejected: Phone must be a 10-digit mobile number starting with 6-9 | ✅ Pass |  |
-| TC-EP-10 | I8 · phone = `987654321012` (12 digits) | Rejected | Accepted (R1001, table T1, deposit Rs.0) | ❌ Fail |  |
+| TC-EP-10 | I8 · phone = `987654321012` (12 digits) | Rejected | Accepted (R1001, table T1, deposit Rs.0) | ❌ Fail | DEF-002 |
 | TC-EP-11 | V3 · email = blank | Accepted | Accepted (R1001, table T1, deposit Rs.0) | ✅ Pass |  |
 | TC-EP-12 | V4 · email = `priya@example.com` | Accepted | Accepted (R1001, table T1, deposit Rs.0) | ✅ Pass |  |
 | TC-EP-13 | I9 · email = `priya.example.com` | Rejected | Rejected: Email address is not valid | ✅ Pass |  |
@@ -83,7 +83,7 @@
 | TC-BVA-02 | R4 · party = 1 | Accepted | Accepted (R1001, table T1, deposit Rs.0) | ✅ Pass |  |
 | TC-BVA-03 | R4 · party = 2 | Accepted | Accepted (R1001, table T1, deposit Rs.0) | ✅ Pass |  |
 | TC-BVA-04 | R4 · party = 7 | Accepted | Accepted (R1001, table T8, deposit Rs.700) | ✅ Pass |  |
-| TC-BVA-05 | R4 · party = 8 | Accepted | Rejected: Party size must be between 1 and 8 | ❌ Fail |  |
+| TC-BVA-05 | R4 · party = 8 | Accepted | Rejected: Party size must be between 1 and 8 | ❌ Fail | DEF-001 |
 | TC-BVA-06 | R4 · party = 9 | Rejected | Rejected: Party size must be between 1 and 8 | ✅ Pass |  |
 | TC-BVA-07 | R1 · name = `A` (1) | Rejected | Rejected: Name must be 2 to 50 characters | ✅ Pass |  |
 | TC-BVA-08 | R1 · name = `Al` (2) | Accepted | Accepted (R1001, table T1, deposit Rs.0) | ✅ Pass |  |
@@ -91,16 +91,16 @@
 | TC-BVA-10 | R1 · name = 49 × `A` | Accepted | Accepted (R1001, table T1, deposit Rs.0) | ✅ Pass |  |
 | TC-BVA-11 | R1 · name = 50 × `A` | Accepted | Accepted (R1001, table T1, deposit Rs.0) | ✅ Pass |  |
 | TC-BVA-12 | R1 · name = 51 × `A` | Rejected | Rejected: Name must be 2 to 50 characters | ✅ Pass |  |
-| TC-BVA-13 | R1 · name = `" A "` (1 letter after trim) | Rejected | Accepted (R1001, table T1, deposit Rs.0) | ❌ Fail |  |
+| TC-BVA-13 | R1 · name = `" A "` (1 letter after trim) | Rejected | Accepted (R1001, table T1, deposit Rs.0) | ❌ Fail | DEF-006 |
 | TC-BVA-14 | R2 · phone = `987654321` (9) | Rejected | Rejected: Phone must be a 10-digit mobile number starting with 6-9 | ✅ Pass |  |
 | TC-BVA-15 | R2 · phone = `9876543210` (10) | Accepted | Accepted (R1001, table T1, deposit Rs.0) | ✅ Pass |  |
-| TC-BVA-16 | R2 · phone = `98765432101` (11) | Rejected | Accepted (R1001, table T1, deposit Rs.0) | ❌ Fail |  |
+| TC-BVA-16 | R2 · phone = `98765432101` (11) | Rejected | Accepted (R1001, table T1, deposit Rs.0) | ❌ Fail | DEF-002 |
 | TC-BVA-17 | R5 · date = 2026-11-15 (yesterday) | Rejected | Rejected: Date cannot be in the past | ✅ Pass |  |
 | TC-BVA-18 | R5 · date = 2026-11-16 (today) | Accepted | Accepted (R1001, table T1, deposit Rs.0) | ✅ Pass |  |
 | TC-BVA-19 | R5 · date = 2026-11-17 | Accepted | Accepted (R1001, table T1, deposit Rs.0) | ✅ Pass |  |
 | TC-BVA-20 | R5 · date = 2026-12-15 (+29) | Accepted | Accepted (R1001, table T1, deposit Rs.0) | ✅ Pass |  |
 | TC-BVA-21 | R5 · date = 2026-12-16 (+30) | Accepted | Accepted (R1001, table T1, deposit Rs.0) | ✅ Pass |  |
-| TC-BVA-22 | R5 · date = 2026-12-17 (+31) | Rejected | Accepted (R1001, table T1, deposit Rs.0) | ❌ Fail |  |
+| TC-BVA-22 | R5 · date = 2026-12-17 (+31) | Rejected | Accepted (R1001, table T1, deposit Rs.0) | ❌ Fail | DEF-007 |
 | TC-BVA-23 | R6 · time = 10:30 | Rejected | Rejected: Bookings are accepted from 11:00 to 21:30 | ✅ Pass |  |
 | TC-BVA-24 | R6 · time = 11:00 | Accepted | Accepted (R1001, table T1, deposit Rs.0) | ✅ Pass |  |
 | TC-BVA-25 | R6 · time = 11:30 | Accepted | Accepted (R1001, table T1, deposit Rs.0) | ✅ Pass |  |
@@ -108,8 +108,8 @@
 | TC-BVA-27 | R6 · time = 21:30 | Accepted | Accepted (R1001, table T1, deposit Rs.0) | ✅ Pass |  |
 | TC-BVA-28 | R6 · time = 22:00 | Rejected | Rejected: Bookings are accepted from 11:00 to 21:30 | ✅ Pass |  |
 | TC-BVA-29 | 17:30 · 19:00 · No – ends exactly when the other starts | Accepted | Accepted (R1002, table T8, deposit Rs.700) | ✅ Pass |  |
-| TC-BVA-30 | 18:00 · 19:30 · Yes – 30 min | Rejected | Accepted (R1002, table T8, deposit Rs.700) | ❌ Fail |  |
-| TC-BVA-31 | 18:30 · 20:00 · Yes – 60 min | Rejected | Accepted (R1002, table T8, deposit Rs.700) | ❌ Fail |  |
+| TC-BVA-30 | 18:00 · 19:30 · Yes – 30 min | Rejected | Accepted (R1002, table T8, deposit Rs.700) | ❌ Fail | DEF-003 |
+| TC-BVA-31 | 18:30 · 20:00 · Yes – 60 min | Rejected | Accepted (R1002, table T8, deposit Rs.700) | ❌ Fail | DEF-003 |
 | TC-BVA-32 | 19:00 · 20:30 · Yes – same slot | Rejected | Rejected: No table available for this party size and time | ✅ Pass |  |
 | TC-BVA-33 | 20:00 · 21:30 · Yes – starts before 20:30 | Rejected | Rejected: No table available for this party size and time | ✅ Pass |  |
 | TC-BVA-34 | 20:30 · 22:00 · No – starts exactly when the other ends | Accepted | Accepted (R1002, table T8, deposit Rs.700) | ✅ Pass |  |
@@ -129,14 +129,14 @@
 | TC-DT-06 | 6 · 2 · Sat 21 Nov · 13:00 | Deposit Rs.0 | Deposit Rs.0 | ✅ Pass |  |
 | TC-DT-07 | 7 · 2 · Wed 18 Nov · 19:30 | Deposit Rs.0 | Deposit Rs.0 | ✅ Pass |  |
 | TC-DT-08 | 8 · 2 · Wed 18 Nov · 13:00 | Deposit Rs.0 | Deposit Rs.0 | ✅ Pass |  |
-| TC-DT-09 | Friday is **not** a weekend (C2 = N) · 2 · Fri 20 Nov · 19:00 | Deposit Rs.0 | Deposit Rs.300 | ❌ Fail |  |
+| TC-DT-09 | Friday is **not** a weekend (C2 = N) · 2 · Fri 20 Nov · 19:00 | Deposit Rs.0 | Deposit Rs.300 | ❌ Fail | DEF-004 |
 | TC-DT-10 | Sunday + last peak slot (C2 = Y, C3 = Y) · 2 · Sun 22 Nov · 21:30 | Deposit Rs.300 | Deposit Rs.300 | ✅ Pass |  |
 | TC-DT-11 | Just before peak (C3 = N) · 2 · Sat 21 Nov · 18:30 | Deposit Rs.0 | Deposit Rs.0 | ✅ Pass |  |
 | TC-DT-12 | 1 · Party 6, deposit ₹600 · 12:00 (3 h notice) | CANCELLED, refund Rs.600 | CANCELLED, refund Rs.600 | ✅ Pass |  |
 | TC-DT-13 | 2 · Party 6, deposit ₹600 · 14:00 (1 h notice) | CANCELLED, refund Rs.0 | CANCELLED, refund Rs.0 | ✅ Pass |  |
 | TC-DT-14 | 3 · Party 2, no deposit · 12:00 | CANCELLED, refund Rs.0 | CANCELLED, refund Rs.0 | ✅ Pass |  |
 | TC-DT-15 | 4 · Party 2, no deposit · 14:00 | CANCELLED, refund Rs.0 | CANCELLED, refund Rs.0 | ✅ Pass |  |
-| TC-DT-16 | 5 · Booking already SEATED · any | Refused | Cancelled (status CANCELLED) | ❌ Fail |  |
+| TC-DT-16 | 5 · Booking already SEATED · any | Refused | Cancelled (status CANCELLED) | ❌ Fail | DEF-005 |
 | TC-DT-17 | 5 · Booking already CANCELLED · any | Refused | Refused: Cannot change status from CANCELLED to CANCELLED | ✅ Pass |  |
 
 ## State Transition
@@ -148,9 +148,9 @@
 | TC-ST-03 | Valid · CONFIRMED · cancel | CONFIRMED -> CANCELLED | CONFIRMED -> CANCELLED | ✅ Pass |  |
 | TC-ST-04 | Valid · CONFIRMED · no-show | CONFIRMED -> NO_SHOW | CONFIRMED -> NO_SHOW | ✅ Pass |  |
 | TC-ST-05 | Invalid · CONFIRMED · complete | Refused, status stays CONFIRMED | Refused, status stays CONFIRMED (Cannot change status from CONFIRMED to COMPLETED) | ✅ Pass |  |
-| TC-ST-06 | Invalid · SEATED · cancel | Refused, status stays SEATED | Allowed: status is now CANCELLED | ❌ Fail |  |
+| TC-ST-06 | Invalid · SEATED · cancel | Refused, status stays SEATED | Allowed: status is now CANCELLED | ❌ Fail | DEF-005 |
 | TC-ST-07 | Invalid · SEATED · no-show | Refused, status stays SEATED | Refused, status stays SEATED (Cannot change status from SEATED to NO_SHOW) | ✅ Pass |  |
-| TC-ST-08 | Invalid · COMPLETED · cancel | Refused, status stays COMPLETED | Allowed: status is now CANCELLED | ❌ Fail |  |
+| TC-ST-08 | Invalid · COMPLETED · cancel | Refused, status stays COMPLETED | Allowed: status is now CANCELLED | ❌ Fail | DEF-005 |
 | TC-ST-09 | Invalid · COMPLETED · seat | Refused, status stays COMPLETED | Refused, status stays COMPLETED (Cannot change status from COMPLETED to SEATED) | ✅ Pass |  |
 | TC-ST-10 | Invalid · CANCELLED · seat | Refused, status stays CANCELLED | Refused, status stays CANCELLED (Cannot change status from CANCELLED to SEATED) | ✅ Pass |  |
 | TC-ST-11 | Invalid · CANCELLED · cancel | Refused, status stays CANCELLED | Refused, status stays CANCELLED (Cannot change status from CANCELLED to CANCELLED) | ✅ Pass |  |
@@ -197,7 +197,7 @@
 | TC-UI-01 | Open home page | Booking form visible, title contains 'Book a table' | Form visible=True, title='Book a table · Reservations' | ✅ Pass |  |
 | TC-UI-02 | Fill valid details (2 guests, Wed 13:00) → Reserve | Confirmation page with reservation ID and table T1 | Banner shown, R1001, table T1 | ✅ Pass |  |
 | TC-UI-03 | Enter phone `12345` → Reserve | Error message about phone number | Phone must be a 10-digit mobile number starting with 6-9 | ✅ Pass |  |
-| TC-UI-04 | Name "Rahul Verma", phone `12345`, 3 guests → Reserve | Name 'Rahul Verma', phone '12345', guests '3' still filled in | Name '', phone '', guests '2' | ❌ Fail |  |
+| TC-UI-04 | Name "Rahul Verma", phone `12345`, 3 guests → Reserve | Name 'Rahul Verma', phone '12345', guests '3' still filled in | Name '', phone '', guests '2' | ❌ Fail | DEF-008 |
 | TC-UI-05 | Book 6 guests Wed 19:00 → Cancel reservation | Status CANCELLED, refund ₹600 | Status CANCELLED, refund ₹600 | ✅ Pass |  |
 | TC-UI-06 | Book → Staff view → Seat → Complete | SEATED then COMPLETED | SEATED then COMPLETED | ✅ Pass |  |
 | TC-UI-07 | Book 6 guests Sat 21 Nov 19:00 | Deposit ₹900 | Deposit ₹900 | ✅ Pass |  |
@@ -213,12 +213,12 @@
 | PM-03 | Create reservation (valid) | 4/4 | ✅ Pass |  |  |
 | PM-04 | Get reservation by ID | 2/2 | ✅ Pass |  |  |
 | PM-05 | Invalid phone rejected | 2/2 | ✅ Pass |  |  |
-| PM-06 | Party of 8 accepted (upper boundary) | 0/2 | ❌ Fail | Status 201 Created; Table T8 assigned |  |
+| PM-06 | Party of 8 accepted (upper boundary) | 0/2 | ❌ Fail | Status 201 Created; Table T8 assigned | DEF-001 |
 | PM-07 | Party of 7 at 19:00 (takes T8) | 1/1 | ✅ Pass |  |  |
-| PM-08 | Overlapping booking at 18:30 refused | 0/2 | ❌ Fail | Status 409 Conflict (no double booking); Code no_table |  |
+| PM-08 | Overlapping booking at 18:30 refused | 0/2 | ❌ Fail | Status 409 Conflict (no double booking); Code no_table | DEF-003 |
 | PM-09 | Duplicate phone same day refused | 2/2 | ✅ Pass |  |  |
 | PM-10 | Seat the guest | 2/2 | ✅ Pass |  |  |
 | PM-11 | Complete the visit | 2/2 | ✅ Pass |  |  |
-| PM-12 | Cancelling a completed visit is refused | 0/2 | ❌ Fail | Status 409; Code invalid_transition |  |
+| PM-12 | Cancelling a completed visit is refused | 0/2 | ❌ Fail | Status 409; Code invalid_transition | DEF-005 |
 | PM-13 | Unknown reservation gives 404 | 1/1 | ✅ Pass |  |  |
 | PM-14 | Availability shows T8 busy | 2/2 | ✅ Pass |  |  |

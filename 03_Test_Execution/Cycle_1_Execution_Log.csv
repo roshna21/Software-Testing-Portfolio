@@ -3,12 +3,12 @@ TC-EP-01,Equivalence Partitioning,V1 · name = `Priya Sharma`,Accepted,"Accepted
 TC-EP-02,Equivalence Partitioning,I1 · name = `` (empty),Rejected,Rejected: Name must be 2 to 50 characters,PASS,
 TC-EP-03,Equivalence Partitioning,I2 · name = `Priya123`,Rejected,Rejected: Name may contain only letters and spaces,PASS,
 TC-EP-04,Equivalence Partitioning,I3 · name = `Priya@#`,Rejected,Rejected: Name may contain only letters and spaces,PASS,
-TC-EP-05,Equivalence Partitioning,"I4 · name = `""    ""` (4 spaces)",Rejected,"Accepted (R1001, table T1, deposit Rs.0)",FAIL,
+TC-EP-05,Equivalence Partitioning,"I4 · name = `""    ""` (4 spaces)",Rejected,"Accepted (R1001, table T1, deposit Rs.0)",FAIL,DEF-006
 TC-EP-06,Equivalence Partitioning,V2 · phone = `9876543210`,Accepted,"Accepted (R1001, table T1, deposit Rs.0)",PASS,
 TC-EP-07,Equivalence Partitioning,I5 · phone = `5876543210`,Rejected,Rejected: Phone must be a 10-digit mobile number starting with 6-9,PASS,
 TC-EP-08,Equivalence Partitioning,I6 · phone = `98765abcde`,Rejected,Rejected: Phone must be a 10-digit mobile number starting with 6-9,PASS,
 TC-EP-09,Equivalence Partitioning,I7 · phone = `98765`,Rejected,Rejected: Phone must be a 10-digit mobile number starting with 6-9,PASS,
-TC-EP-10,Equivalence Partitioning,I8 · phone = `987654321012` (12 digits),Rejected,"Accepted (R1001, table T1, deposit Rs.0)",FAIL,
+TC-EP-10,Equivalence Partitioning,I8 · phone = `987654321012` (12 digits),Rejected,"Accepted (R1001, table T1, deposit Rs.0)",FAIL,DEF-002
 TC-EP-11,Equivalence Partitioning,V3 · email = blank,Accepted,"Accepted (R1001, table T1, deposit Rs.0)",PASS,
 TC-EP-12,Equivalence Partitioning,V4 · email = `priya@example.com`,Accepted,"Accepted (R1001, table T1, deposit Rs.0)",PASS,
 TC-EP-13,Equivalence Partitioning,I9 · email = `priya.example.com`,Rejected,Rejected: Email address is not valid,PASS,
@@ -32,7 +32,7 @@ TC-BVA-01,Boundary Value Analysis,R4 · party = 0,Rejected,Rejected: Party size 
 TC-BVA-02,Boundary Value Analysis,R4 · party = 1,Accepted,"Accepted (R1001, table T1, deposit Rs.0)",PASS,
 TC-BVA-03,Boundary Value Analysis,R4 · party = 2,Accepted,"Accepted (R1001, table T1, deposit Rs.0)",PASS,
 TC-BVA-04,Boundary Value Analysis,R4 · party = 7,Accepted,"Accepted (R1001, table T8, deposit Rs.700)",PASS,
-TC-BVA-05,Boundary Value Analysis,R4 · party = 8,Accepted,Rejected: Party size must be between 1 and 8,FAIL,
+TC-BVA-05,Boundary Value Analysis,R4 · party = 8,Accepted,Rejected: Party size must be between 1 and 8,FAIL,DEF-001
 TC-BVA-06,Boundary Value Analysis,R4 · party = 9,Rejected,Rejected: Party size must be between 1 and 8,PASS,
 TC-BVA-07,Boundary Value Analysis,R1 · name = `A` (1),Rejected,Rejected: Name must be 2 to 50 characters,PASS,
 TC-BVA-08,Boundary Value Analysis,R1 · name = `Al` (2),Accepted,"Accepted (R1001, table T1, deposit Rs.0)",PASS,
@@ -40,16 +40,16 @@ TC-BVA-09,Boundary Value Analysis,R1 · name = `Ali` (3),Accepted,"Accepted (R10
 TC-BVA-10,Boundary Value Analysis,R1 · name = 49 × `A`,Accepted,"Accepted (R1001, table T1, deposit Rs.0)",PASS,
 TC-BVA-11,Boundary Value Analysis,R1 · name = 50 × `A`,Accepted,"Accepted (R1001, table T1, deposit Rs.0)",PASS,
 TC-BVA-12,Boundary Value Analysis,R1 · name = 51 × `A`,Rejected,Rejected: Name must be 2 to 50 characters,PASS,
-TC-BVA-13,Boundary Value Analysis,"R1 · name = `"" A ""` (1 letter after trim)",Rejected,"Accepted (R1001, table T1, deposit Rs.0)",FAIL,
+TC-BVA-13,Boundary Value Analysis,"R1 · name = `"" A ""` (1 letter after trim)",Rejected,"Accepted (R1001, table T1, deposit Rs.0)",FAIL,DEF-006
 TC-BVA-14,Boundary Value Analysis,R2 · phone = `987654321` (9),Rejected,Rejected: Phone must be a 10-digit mobile number starting with 6-9,PASS,
 TC-BVA-15,Boundary Value Analysis,R2 · phone = `9876543210` (10),Accepted,"Accepted (R1001, table T1, deposit Rs.0)",PASS,
-TC-BVA-16,Boundary Value Analysis,R2 · phone = `98765432101` (11),Rejected,"Accepted (R1001, table T1, deposit Rs.0)",FAIL,
+TC-BVA-16,Boundary Value Analysis,R2 · phone = `98765432101` (11),Rejected,"Accepted (R1001, table T1, deposit Rs.0)",FAIL,DEF-002
 TC-BVA-17,Boundary Value Analysis,R5 · date = 2026-11-15 (yesterday),Rejected,Rejected: Date cannot be in the past,PASS,
 TC-BVA-18,Boundary Value Analysis,R5 · date = 2026-11-16 (today),Accepted,"Accepted (R1001, table T1, deposit Rs.0)",PASS,
 TC-BVA-19,Boundary Value Analysis,R5 · date = 2026-11-17,Accepted,"Accepted (R1001, table T1, deposit Rs.0)",PASS,
 TC-BVA-20,Boundary Value Analysis,R5 · date = 2026-12-15 (+29),Accepted,"Accepted (R1001, table T1, deposit Rs.0)",PASS,
 TC-BVA-21,Boundary Value Analysis,R5 · date = 2026-12-16 (+30),Accepted,"Accepted (R1001, table T1, deposit Rs.0)",PASS,
-TC-BVA-22,Boundary Value Analysis,R5 · date = 2026-12-17 (+31),Rejected,"Accepted (R1001, table T1, deposit Rs.0)",FAIL,
+TC-BVA-22,Boundary Value Analysis,R5 · date = 2026-12-17 (+31),Rejected,"Accepted (R1001, table T1, deposit Rs.0)",FAIL,DEF-007
 TC-BVA-23,Boundary Value Analysis,R6 · time = 10:30,Rejected,Rejected: Bookings are accepted from 11:00 to 21:30,PASS,
 TC-BVA-24,Boundary Value Analysis,R6 · time = 11:00,Accepted,"Accepted (R1001, table T1, deposit Rs.0)",PASS,
 TC-BVA-25,Boundary Value Analysis,R6 · time = 11:30,Accepted,"Accepted (R1001, table T1, deposit Rs.0)",PASS,
@@ -57,8 +57,8 @@ TC-BVA-26,Boundary Value Analysis,R6 · time = 21:00,Accepted,"Accepted (R1001, 
 TC-BVA-27,Boundary Value Analysis,R6 · time = 21:30,Accepted,"Accepted (R1001, table T1, deposit Rs.0)",PASS,
 TC-BVA-28,Boundary Value Analysis,R6 · time = 22:00,Rejected,Rejected: Bookings are accepted from 11:00 to 21:30,PASS,
 TC-BVA-29,Boundary Value Analysis,17:30 · 19:00 · No – ends exactly when the other starts,Accepted,"Accepted (R1002, table T8, deposit Rs.700)",PASS,
-TC-BVA-30,Boundary Value Analysis,18:00 · 19:30 · Yes – 30 min,Rejected,"Accepted (R1002, table T8, deposit Rs.700)",FAIL,
-TC-BVA-31,Boundary Value Analysis,18:30 · 20:00 · Yes – 60 min,Rejected,"Accepted (R1002, table T8, deposit Rs.700)",FAIL,
+TC-BVA-30,Boundary Value Analysis,18:00 · 19:30 · Yes – 30 min,Rejected,"Accepted (R1002, table T8, deposit Rs.700)",FAIL,DEF-003
+TC-BVA-31,Boundary Value Analysis,18:30 · 20:00 · Yes – 60 min,Rejected,"Accepted (R1002, table T8, deposit Rs.700)",FAIL,DEF-003
 TC-BVA-32,Boundary Value Analysis,19:00 · 20:30 · Yes – same slot,Rejected,Rejected: No table available for this party size and time,PASS,
 TC-BVA-33,Boundary Value Analysis,20:00 · 21:30 · Yes – starts before 20:30,Rejected,Rejected: No table available for this party size and time,PASS,
 TC-BVA-34,Boundary Value Analysis,20:30 · 22:00 · No – starts exactly when the other ends,Accepted,"Accepted (R1002, table T8, deposit Rs.700)",PASS,
@@ -73,23 +73,23 @@ TC-DT-05,Decision Table,5 · 2 · Sat 21 Nov · 20:00,Deposit Rs.300,Deposit Rs.
 TC-DT-06,Decision Table,6 · 2 · Sat 21 Nov · 13:00,Deposit Rs.0,Deposit Rs.0,PASS,
 TC-DT-07,Decision Table,7 · 2 · Wed 18 Nov · 19:30,Deposit Rs.0,Deposit Rs.0,PASS,
 TC-DT-08,Decision Table,8 · 2 · Wed 18 Nov · 13:00,Deposit Rs.0,Deposit Rs.0,PASS,
-TC-DT-09,Decision Table,Friday is **not** a weekend (C2 = N) · 2 · Fri 20 Nov · 19:00,Deposit Rs.0,Deposit Rs.300,FAIL,
+TC-DT-09,Decision Table,Friday is **not** a weekend (C2 = N) · 2 · Fri 20 Nov · 19:00,Deposit Rs.0,Deposit Rs.300,FAIL,DEF-004
 TC-DT-10,Decision Table,"Sunday + last peak slot (C2 = Y, C3 = Y) · 2 · Sun 22 Nov · 21:30",Deposit Rs.300,Deposit Rs.300,PASS,
 TC-DT-11,Decision Table,Just before peak (C3 = N) · 2 · Sat 21 Nov · 18:30,Deposit Rs.0,Deposit Rs.0,PASS,
 TC-DT-12,Decision Table,"1 · Party 6, deposit ₹600 · 12:00 (3 h notice)","CANCELLED, refund Rs.600","CANCELLED, refund Rs.600",PASS,
 TC-DT-13,Decision Table,"2 · Party 6, deposit ₹600 · 14:00 (1 h notice)","CANCELLED, refund Rs.0","CANCELLED, refund Rs.0",PASS,
 TC-DT-14,Decision Table,"3 · Party 2, no deposit · 12:00","CANCELLED, refund Rs.0","CANCELLED, refund Rs.0",PASS,
 TC-DT-15,Decision Table,"4 · Party 2, no deposit · 14:00","CANCELLED, refund Rs.0","CANCELLED, refund Rs.0",PASS,
-TC-DT-16,Decision Table,5 · Booking already SEATED · any,Refused,Cancelled (status CANCELLED),FAIL,
+TC-DT-16,Decision Table,5 · Booking already SEATED · any,Refused,Cancelled (status CANCELLED),FAIL,DEF-005
 TC-DT-17,Decision Table,5 · Booking already CANCELLED · any,Refused,Refused: Cannot change status from CANCELLED to CANCELLED,PASS,
 TC-ST-01,State Transition,Valid · CONFIRMED · seat,CONFIRMED -> SEATED,CONFIRMED -> SEATED,PASS,
 TC-ST-02,State Transition,Valid · SEATED · complete,SEATED -> COMPLETED,SEATED -> COMPLETED,PASS,
 TC-ST-03,State Transition,Valid · CONFIRMED · cancel,CONFIRMED -> CANCELLED,CONFIRMED -> CANCELLED,PASS,
 TC-ST-04,State Transition,Valid · CONFIRMED · no-show,CONFIRMED -> NO_SHOW,CONFIRMED -> NO_SHOW,PASS,
 TC-ST-05,State Transition,Invalid · CONFIRMED · complete,"Refused, status stays CONFIRMED","Refused, status stays CONFIRMED (Cannot change status from CONFIRMED to COMPLETED)",PASS,
-TC-ST-06,State Transition,Invalid · SEATED · cancel,"Refused, status stays SEATED",Allowed: status is now CANCELLED,FAIL,
+TC-ST-06,State Transition,Invalid · SEATED · cancel,"Refused, status stays SEATED",Allowed: status is now CANCELLED,FAIL,DEF-005
 TC-ST-07,State Transition,Invalid · SEATED · no-show,"Refused, status stays SEATED","Refused, status stays SEATED (Cannot change status from SEATED to NO_SHOW)",PASS,
-TC-ST-08,State Transition,Invalid · COMPLETED · cancel,"Refused, status stays COMPLETED",Allowed: status is now CANCELLED,FAIL,
+TC-ST-08,State Transition,Invalid · COMPLETED · cancel,"Refused, status stays COMPLETED",Allowed: status is now CANCELLED,FAIL,DEF-005
 TC-ST-09,State Transition,Invalid · COMPLETED · seat,"Refused, status stays COMPLETED","Refused, status stays COMPLETED (Cannot change status from COMPLETED to SEATED)",PASS,
 TC-ST-10,State Transition,Invalid · CANCELLED · seat,"Refused, status stays CANCELLED","Refused, status stays CANCELLED (Cannot change status from CANCELLED to SEATED)",PASS,
 TC-ST-11,State Transition,Invalid · CANCELLED · cancel,"Refused, status stays CANCELLED","Refused, status stays CANCELLED (Cannot change status from CANCELLED to CANCELLED)",PASS,
@@ -121,7 +121,7 @@ TC-API-13,REST API (pytest),"Same phone, same day, second booking","409, duplica
 TC-UI-01,Web UI (Selenium),Open home page,"Booking form visible, title contains 'Book a table'","Form visible=True, title='Book a table · Reservations'",PASS,
 TC-UI-02,Web UI (Selenium),"Fill valid details (2 guests, Wed 13:00) → Reserve",Confirmation page with reservation ID and table T1,"Banner shown, R1001, table T1",PASS,
 TC-UI-03,Web UI (Selenium),Enter phone `12345` → Reserve,Error message about phone number,Phone must be a 10-digit mobile number starting with 6-9,PASS,
-TC-UI-04,Web UI (Selenium),"Name ""Rahul Verma"", phone `12345`, 3 guests → Reserve","Name 'Rahul Verma', phone '12345', guests '3' still filled in","Name '', phone '', guests '2'",FAIL,
+TC-UI-04,Web UI (Selenium),"Name ""Rahul Verma"", phone `12345`, 3 guests → Reserve","Name 'Rahul Verma', phone '12345', guests '3' still filled in","Name '', phone '', guests '2'",FAIL,DEF-008
 TC-UI-05,Web UI (Selenium),Book 6 guests Wed 19:00 → Cancel reservation,"Status CANCELLED, refund ₹600","Status CANCELLED, refund ₹600",PASS,
 TC-UI-06,Web UI (Selenium),Book → Staff view → Seat → Complete,SEATED then COMPLETED,SEATED then COMPLETED,PASS,
 TC-UI-07,Web UI (Selenium),Book 6 guests Sat 21 Nov 19:00,Deposit ₹900,Deposit ₹900,PASS,
@@ -132,12 +132,12 @@ PM-02,Postman,List tables,3 assertions pass,3/3 passed,PASS,
 PM-03,Postman,Create reservation (valid),4 assertions pass,4/4 passed,PASS,
 PM-04,Postman,Get reservation by ID,2 assertions pass,2/2 passed,PASS,
 PM-05,Postman,Invalid phone rejected,2 assertions pass,2/2 passed,PASS,
-PM-06,Postman,Party of 8 accepted (upper boundary),2 assertions pass,0/2 passed,FAIL,
+PM-06,Postman,Party of 8 accepted (upper boundary),2 assertions pass,0/2 passed,FAIL,DEF-001
 PM-07,Postman,Party of 7 at 19:00 (takes T8),1 assertions pass,1/1 passed,PASS,
-PM-08,Postman,Overlapping booking at 18:30 refused,2 assertions pass,0/2 passed,FAIL,
+PM-08,Postman,Overlapping booking at 18:30 refused,2 assertions pass,0/2 passed,FAIL,DEF-003
 PM-09,Postman,Duplicate phone same day refused,2 assertions pass,2/2 passed,PASS,
 PM-10,Postman,Seat the guest,2 assertions pass,2/2 passed,PASS,
 PM-11,Postman,Complete the visit,2 assertions pass,2/2 passed,PASS,
-PM-12,Postman,Cancelling a completed visit is refused,2 assertions pass,0/2 passed,FAIL,
+PM-12,Postman,Cancelling a completed visit is refused,2 assertions pass,0/2 passed,FAIL,DEF-005
 PM-13,Postman,Unknown reservation gives 404,1 assertions pass,1/1 passed,PASS,
 PM-14,Postman,Availability shows T8 busy,2 assertions pass,2/2 passed,PASS,
