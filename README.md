@@ -8,7 +8,7 @@
 |---|---|
 | Roshna Sai | 1MS23IS106 |
 | Vishwajith Chakravarthy | 1MS23IS150 |
-| Yashaswini | 1MS23IS107 |
+| S Yashaswini | 1MS23IS107 |
 
 | | |
 |---|---|
