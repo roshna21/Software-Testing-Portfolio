@@ -4,10 +4,14 @@
 
 ## Student details
 
+| Name | USN |
+|---|---|
+| Roshna Sai | 1MS23IS106 |
+| Vishwajith Chakravarthy | 1MS23IS150 |
+| Yashaswini | 1MS23IS107 |
+
 | | |
 |---|---|
-| **Name** | Roshna Sai |
-| **USN** | 1MS23IS106 |
 | **Department** | Information Science & Engineering |
 | **Institution** | M S Ramaiah Institute of Technology, Bengaluru |
 | **Subject** | Software Testing – Other Component (Online Portfolio using GitHub Activity) |
