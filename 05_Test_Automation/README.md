@@ -24,6 +24,7 @@ pytest                         # all 128 tests
 pytest unit                    # unit only
 pytest -k "TC-BVA-05"          # one test case by ID
 pytest -m ui                   # Selenium only
+SHOW_BROWSER=1 pytest -m ui    # Selenium with a visible Chrome window (for demos)
 
 bash postman/run_postman.sh    # Postman collection via Newman
 python mutation/mutation_test.py

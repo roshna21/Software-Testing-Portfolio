@@ -1,12 +1,14 @@
 """TC-UI-01 .. TC-UI-08: Selenium WebDriver tests of the web interface.
 
 The app is started in a background thread on a free port with the clock
-frozen at Monday 2026-11-16 10:00. Chrome runs headless.
+frozen at Monday 2026-11-16 10:00. Chrome runs headless by default;
+set SHOW_BROWSER=1 to watch the browser during a live demo.
 Screenshots are saved to 07_Screenshots/selenium/ as evidence.
 """
 import os
 import socket
 import threading
+import time
 from pathlib import Path
 
 import pytest
@@ -47,8 +49,10 @@ def base_url():
 @pytest.fixture(scope="module")
 def driver():
     options = webdriver.ChromeOptions()
-    for arg in ("--headless=new", "--no-sandbox", "--disable-dev-shm-usage", "--window-size=1280,900"):
+    for arg in ("--no-sandbox", "--disable-dev-shm-usage", "--window-size=1280,900"):
         options.add_argument(arg)
+    if os.environ.get("SHOW_BROWSER") != "1":
+        options.add_argument("--headless=new")
     if os.environ.get("CHROME_BINARY"):
         options.binary_location = os.environ["CHROME_BINARY"]
     # Selenium Manager finds a matching driver automatically; CHROMEDRIVER overrides it.
@@ -59,7 +63,14 @@ def driver():
     drv.quit()
 
 
+def pause():
+    """Slow down so people can follow each step when SHOW_BROWSER=1."""
+    if os.environ.get("SHOW_BROWSER") == "1":
+        time.sleep(float(os.environ.get("DEMO_DELAY", "1.5")))
+
+
 def shot(driver, name):
+    pause()
     SHOTS.mkdir(parents=True, exist_ok=True)
     driver.save_screenshot(str(SHOTS / f"{CYCLE}_{name}.png"))
 
