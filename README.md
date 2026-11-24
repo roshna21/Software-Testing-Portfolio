@@ -21,7 +21,7 @@
 
 1. Understand a real application and identify the modules and functionalities to be tested.
 2. Prepare a test plan with scope, approach, environment, and entry and exit criteria.
-3. Design test cases using **Equivalence Partitioning, Boundary Value Analysis, Decision Tables and State Transition** testing.
+3. Design test cases using the black-box techniques **Equivalence Partitioning, Boundary Value Analysis, Decision Tables and State Transition**, and the white-box techniques **statement coverage and branch coverage**.
 4. Execute the test cases, record actual results, and identify and document defects.
 5. Automate testing with **pytest, Selenium WebDriver, Postman/Newman** and **mutation testing**.
 6. Prepare a test execution summary and keep the whole portfolio on GitHub with meaningful commits.
@@ -79,6 +79,7 @@ The application was built in Python (Flask) for this project and lives in [`appl
 | Boundary Value Analysis | Guests 1–8, name 2–50, phone length, 30-day window, 11:00–21:30, 90-min overlap, 2-h refund | DEF-001, 002, 003, 006, 007 |
 | Decision Table | Deposit rule (8 rules), cancellation and refund | DEF-004, DEF-005 |
 | State Transition | Reservation life cycle (5 states, 4 events) | DEF-005 |
+| **White-box:** statement + branch coverage | `calculate_deposit()` and `validate_party_size()` traced line by line (6 tests, 100% / 100%); whole app 94% statement, 86% branch | Shows which code the tests reach |
 | Selenium WebDriver | Booking, cancellation and staff flows in Chrome | DEF-008 |
 | Postman / Newman | REST API contract | DEF-001, 003, 005 |
 | Mutation testing | Quality of the test suite itself | 3 weak tests improved |
@@ -92,6 +93,7 @@ bash demo.sh setup      # first time only
 bash demo.sh app        # open the website at http://127.0.0.1:5000
 bash demo.sh selenium   # watch Selenium test the website in Chrome
 bash demo.sh tests      # run all test cases
+bash demo.sh wb         # white-box: statement and branch coverage
 ```
 
 **Step by step:**

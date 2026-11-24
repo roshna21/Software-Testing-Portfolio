@@ -1,0 +1,17 @@
+digraph G {
+  rankdir=TB; bgcolor="white"; pad=0.3; nodesep=0.5; ranksep=0.35;
+  node [fontname="Helvetica", fontsize=11, style=filled, color="#7a6a5d"];
+  edge [fontname="Helvetica", fontsize=10, color="#555555"];
+  title [shape=plaintext, style="", label="calculate_deposit()  –  service.py lines 48-55", fontsize=13, fontname="Helvetica-Bold"];
+  S1 [shape=box, fillcolor="#fdf0e1", label="S1  (line 48)\ndeposit = 0"];
+  D1 [shape=diamond, fillcolor="#cfe0f1", label="D1  (line 49)\nparty_size >= 6 ?"];
+  S2 [shape=box, fillcolor="#fdf0e1", label="S2  (line 50)\ndeposit += party_size x 100"];
+  S3 [shape=box, fillcolor="#fdf0e1", label="S3  (lines 51-52)\nis_weekend = Sat/Sun ?\nis_peak = 19:00-21:30 ?"];
+  D2 [shape=diamond, fillcolor="#cfe0f1", label="D2  (line 53)\nis_weekend and is_peak ?"];
+  S4 [shape=box, fillcolor="#fdf0e1", label="S4  (line 54)\ndeposit += 300"];
+  S5 [shape=box, fillcolor="#e8f4ec", label="S5  (line 55)\nreturn deposit"];
+  title -> S1 [style=invis];
+  S1 -> D1; D1 -> S2 [label="  True"]; D1 -> S3 [label="  False", color="#c0504d", fontcolor="#c0504d"];
+  S2 -> S3; S3 -> D2; D2 -> S4 [label="  True"]; D2 -> S5 [label="  False", color="#c0504d", fontcolor="#c0504d"];
+  S4 -> S5;
+}

@@ -1,0 +1,15 @@
+digraph G {
+  rankdir=TB; bgcolor="white"; pad=0.3; nodesep=0.5; ranksep=0.35;
+  node [fontname="Helvetica", fontsize=11, style=filled, color="#7a6a5d"];
+  edge [fontname="Helvetica", fontsize=10, color="#555555"];
+  title [shape=plaintext, style="", label="validate_party_size()  –  validators.py lines 53-59", fontsize=13, fontname="Helvetica-Bold"];
+  S1 [shape=box, fillcolor="#fdf0e1", label="S1  (lines 53-54)\ntry: size = int(party_size)"];
+  D3 [shape=diamond, fillcolor="#cfe0f1", label="D3\nconversion error ?"];
+  S2 [shape=box, fillcolor="#f3caca", label="S2  (lines 55-56)\nraise 'must be a whole number'"];
+  D4 [shape=diamond, fillcolor="#cfe0f1", label="D4  (line 57)\nnot 1 <= size <= 8 ?"];
+  S3 [shape=box, fillcolor="#f3caca", label="S3  (line 58)\nraise 'must be between 1 and 8'"];
+  S4 [shape=box, fillcolor="#e8f4ec", label="S4  (line 59)\nreturn size"];
+  title -> S1 [style=invis];
+  S1 -> D3; D3 -> S2 [label="  Yes"]; D3 -> D4 [label="  No"];
+  D4 -> S3 [label="  True"]; D4 -> S4 [label="  False"];
+}

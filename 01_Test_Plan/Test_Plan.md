@@ -91,6 +91,7 @@ Table layout: T1 (2), T2 (2), T3 (4), T4 (4), T5 (4), T6 (6), T7 (6), T8 (8) –
 | Decision Table | Deposit rule (R8), cancellation refund (R10) | `02_Test_Case_Design/03_Decision_Table.md` |
 | State Transition | Reservation life cycle (R9) | `02_Test_Case_Design/04_State_Transition.md` |
 | Use-case / scenario testing | End-to-end UI flows (R7, R13) | `02_Test_Case_Design/05_Use_Case_UI_API_Tests.md` |
+| White-box: statement coverage + branch coverage | `calculate_deposit()`, `validate_party_size()`, and coverage of the whole application | `02_Test_Case_Design/06_White_Box_Testing.md` |
 
 ## 5. Test environment
 

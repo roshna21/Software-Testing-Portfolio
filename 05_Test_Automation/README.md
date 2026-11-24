@@ -8,6 +8,7 @@
 | `unit/test_state_transition.py` | pytest | Reservation life cycle | 16 |
 | `unit/test_table_allocation.py` | pytest | Table selection | 7 |
 | `api/test_api.py` | pytest + Flask test client | REST endpoints and status codes | 13 |
+| `white_box/test_white_box.py` | pytest + coverage.py | Statement and branch coverage of 2 functions (white-box) | 6 |
 | `ui/test_ui_selenium.py` | **Selenium WebDriver** (Chrome headless) | Booking, errors, cancellation, staff flow | 8 |
 | `postman/` | **Postman + Newman** | API contract from outside the app | 15 requests / 31 assertions |
 | `mutation/mutation_test.py` | **Mutation testing** (custom AST tool) | Strength of the unit + API tests | 71 mutants |
@@ -24,6 +25,8 @@ pytest                         # all 128 tests
 pytest unit                    # unit only
 pytest -k "TC-BVA-05"          # one test case by ID
 pytest -m ui                   # Selenium only
+pytest white_box -v            # white-box tests
+python white_box/white_box_report.py   # statement + branch coverage per function
 SHOW_BROWSER=1 pytest -m ui    # Selenium with a visible Chrome window (for demos)
 
 bash postman/run_postman.sh    # Postman collection via Newman

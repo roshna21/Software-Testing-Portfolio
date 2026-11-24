@@ -73,6 +73,10 @@ TC-BVA-38 was added after Cycle 2 (see section 5), so Cycles 1 and 2 ran 127 tes
 
 The uncovered lines are start-up code that reads environment variables, the test-only `/api/_reset` endpoint, and a few error branches for malformed input (a missing name field, a badly formatted time, or a bad date in the list filter). None of them change a business rule. These are good candidates for future tests. HTML report: `cycle3/coverage/index.html`.
 
+### White-box test design
+
+Besides measuring coverage for the whole app, we designed white-box tests by reading the code of two functions. `calculate_deposit()` and `validate_party_size()` reached **100% statement and 100% branch coverage** with 6 tests (TC-WB-01 … 06). The design shows that one test can reach 100% statement coverage but only 50% branch coverage. See [06_White_Box_Testing.md](../02_Test_Case_Design/06_White_Box_Testing.md).
+
 ## 5. Mutation testing
 
 ![Mutation score](charts/mutation_score.png)

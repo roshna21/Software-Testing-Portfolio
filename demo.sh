@@ -6,6 +6,7 @@
 #   bash demo.sh selenium   # Selenium opens Chrome and runs the 8 UI tests (visible, slowed down)
 #   bash demo.sh tests      # runs all 128 test cases with names, pass/fail
 #   bash demo.sh bva        # runs only the Boundary Value Analysis tests (any group: ep, bva, dt, st)
+#   bash demo.sh wb         # white-box tests: statement + branch coverage of 2 functions, step by step
 #   bash demo.sh postman    # runs the Postman collection with Newman (needs Node.js)
 #   bash demo.sh coverage   # runs all 128 tests with coverage and opens the coverage report
 #   bash demo.sh reports    # opens the summary PDF and the HTML test report
@@ -52,6 +53,12 @@ case "${1:-help}" in
   ep|bva|dt|st)
     need_setup
     cd "$ROOT/05_Test_Automation" && "$PY" -m pytest unit -v -p no:cacheprovider -k "TC-$(echo "$1" | tr a-z A-Z)- or TC_$(echo "$1" | tr a-z A-Z)_"
+    ;;
+  wb)
+    need_setup
+    cd "$ROOT/05_Test_Automation"
+    "$PY" -m pytest white_box -v -p no:cacheprovider
+    "$PY" white_box/white_box_report.py
     ;;
   postman)
     command -v newman >/dev/null || { echo "Newman is not installed. Run: npm install -g newman"; exit 1; }
