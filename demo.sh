@@ -7,7 +7,7 @@
 #   bash demo.sh tests      # runs all 128 test cases with names, pass/fail
 #   bash demo.sh bva        # runs only the Boundary Value Analysis tests (any group: ep, bva, dt, st)
 #   bash demo.sh postman    # runs the Postman collection with Newman (needs Node.js)
-#   bash demo.sh coverage   # runs tests with coverage and opens the coverage report
+#   bash demo.sh coverage   # runs all 128 tests with coverage and opens the coverage report
 #   bash demo.sh reports    # opens the summary PDF and the HTML test report
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
@@ -62,8 +62,11 @@ case "${1:-help}" in
   coverage)
     need_setup
     cd "$ROOT/05_Test_Automation"
-    "$PY" -m pytest unit api -q -p no:cacheprovider --cov="$ROOT/application/reservation_system" --cov-branch \
+    echo "Running all 128 tests (Selenium in the background) and measuring coverage..."
+    TEST_CYCLE=demo "$PY" -m pytest unit api ui -q -p no:cacheprovider \
+      --cov="$ROOT/application/reservation_system" --cov-branch \
       --cov-report=term --cov-report=html:"$ROOT/.coverage_demo"
+    rm -f "$ROOT"/07_Screenshots/selenium/demo_*.png
     open_file "$ROOT/.coverage_demo/index.html"
     ;;
   reports)
