@@ -85,6 +85,17 @@ The application was built in Python (Flask) for this project and lives in [`appl
 
 ## How to run
 
+**Quick way (one script):**
+
+```bash
+bash demo.sh setup      # first time only
+bash demo.sh app        # open the website at http://127.0.0.1:5000
+bash demo.sh selenium   # watch Selenium test the website in Chrome
+bash demo.sh tests      # run all test cases
+```
+
+**Step by step:**
+
 ```bash
 # 1. Install
 pip install -r application/requirements.txt -r 05_Test_Automation/requirements.txt

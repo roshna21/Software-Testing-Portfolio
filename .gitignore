@@ -8,3 +8,4 @@ mutants/
 venv/
 *.log
 .DS_Store
+.coverage_demo/
